@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "435387624953",
+    "project_id": "firebase-eu-resolvo"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435387624953:android:8ffeeb134ffdb940",
+        "android_client_info": {
+          "package_name": "br.unifor.euresolvo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435387624953-hmpui0ltc5btg5goqb6224c11dppf168.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "435387624953-m43inrpo0qsiug7ee3ontklcfu75qje6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.unifor.euresolvo",
+            "certificate_hash": "788bc8b55cab76406bb26d706242490ea7d03930"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhbLbqm3cuZUBTqgbnPH-5B9YmT5POXjI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
