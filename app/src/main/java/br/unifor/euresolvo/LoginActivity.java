@@ -23,6 +23,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import br.unifor.euresolvo.Bean.*;
+import br.unifor.euresolvo.Dao.*;
 
 
 
@@ -34,6 +36,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int RC_SIGN_IN = 9001;
     private ProgressDialog mProgressDialog;
     private GoogleApiClient mGoogleApiClient;
+    private UserDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // logout não execultado
         }
         bar.hide();
+        dao = new UserDao(this);
+
+        if(!dao.isEmpy()){
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
 
     }
 
@@ -86,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            // TODO: acct (resultado)
+            salvarUser(acct);
             hideProgressDialog();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
 //
@@ -95,6 +103,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 //            // Signed out, show unauthenticated UI.
 //            updateUI(false);
         }
+    }
+
+    private void salvarUser(GoogleSignInAccount acct) {
+        UserBean userBeam = new UserBean(acct.getDisplayName(), acct.getEmail(),acct.getId(), acct.getPhotoUrl());
+        dao.salve(userBeam);
     }
 
     private void updateUI(boolean signedIn) {
@@ -185,6 +198,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onStop() {
         super.onStop();
+        dao.close();
         mGoogleApiClient.disconnect();
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
