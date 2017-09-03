@@ -110,17 +110,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         dao.salve(userBeam);
     }
 
-    private void updateUI(boolean signedIn) {
-        if (signedIn) {
-            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-        } else {
-
-
-            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
-        }
-    }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {

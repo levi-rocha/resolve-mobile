@@ -12,6 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import br.unifor.euresolvo.Dao.UserDao;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -90,7 +96,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logoff) {
+            UserDao userDao = new UserDao(this);
+            userDao.reset();
+            userDao.close();
+            finish();
 
         }
 
@@ -98,4 +108,20 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        UserDao userDao = new UserDao(this);
+        TextView textViewName = (TextView) findViewById(R.id.textView_navUserName);
+        TextView textViewEmail = (TextView) findViewById(R.id.textView_navUserEmail);
+        ImageView imageViewPhoto = (ImageView) findViewById(R.id.imageView_navUserPhoto);
+        textViewName.setText(userDao.consult().getPersonName());
+        textViewEmail.setText(userDao.consult().getPersonEmail());
+        Picasso.with(this).load(userDao.consult().getPersonPhoto()).resize(200, 180).centerCrop().into(imageViewPhoto);
+        userDao.close();
+    }
+
+
 }
