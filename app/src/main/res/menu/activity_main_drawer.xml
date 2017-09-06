@@ -28,7 +28,7 @@
                 android:title="Share" />
             <item
                 android:id="@+id/nav_logoff"
-                android:icon="@android:drawable/ic_menu_close_clear_cancel"
+                android:icon="@android:drawable/ic_lock_power_off"
                 android:title="Logoff" />
         </menu>
     </item>

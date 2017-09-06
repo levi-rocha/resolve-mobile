@@ -59,19 +59,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        try{
-            boolean logout = getIntent().getExtras().getBoolean("logout");
-            if (logout){
 
-            }
-        }catch (Exception e){
-            // logout não execultado
-        }
         bar.hide();
         dao = new UserDao(this);
 
         if(!dao.isEmpy()){
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }else {
+            try{
+                boolean logout = getIntent().getExtras().getBoolean("logout");
+                if (logout){
+                    new UserDao(getApplicationContext()).reset();
+                }
+            }catch (Exception e){
+                // logout não execultado
+            }
         }
 
     }
@@ -96,12 +98,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInAccount acct = result.getSignInAccount();
             salvarUser(acct);
             hideProgressDialog();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//
-//            updateUI(true);
-//        } else {
-//            // Signed out, show unauthenticated UI.
-//            updateUI(false);
+            startActivity(new Intent(LoginActivity.this, CadastreActivity.class));
         }
     }
 
