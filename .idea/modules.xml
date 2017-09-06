@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EuResolvo.iml" filepath="$PROJECT_DIR$/EuResolvo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/resolve-mobile.iml" filepath="$PROJECT_DIR$/resolve-mobile.iml" />
     </modules>
   </component>
 </project>

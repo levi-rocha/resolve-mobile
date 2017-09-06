@@ -1,5 +1,6 @@
 package br.unifor.euresolvo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import br.unifor.euresolvo.Dao.UserDao;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public boolean frist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +50,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        frist = true;
     }
 
     @Override
@@ -90,7 +101,14 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logoff) {
+            Bundle parametros = new Bundle();
+            parametros.putBoolean("logout", true);
+            new UserDao(getApplicationContext()).reset();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.putExtras(parametros);
+            startActivity(intent);
+            finish();
 
         }
 
@@ -98,4 +116,24 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+
+        if(frist) {
+            UserDao userDao = new UserDao(this);
+            TextView textViewName = (TextView) findViewById(R.id.textView_navUserName);
+            TextView textViewEmail = (TextView) findViewById(R.id.textView_navUserEmail);
+            ImageView imageViewPhoto = (ImageView) findViewById(R.id.imageView_navUserPhoto);
+            textViewName.setText(userDao.consult().getPersonName());
+            textViewEmail.setText(userDao.consult().getPersonEmail());
+            Picasso.with(this).load(userDao.consult().getPersonPhoto()).resize(200, 180).centerCrop().into(imageViewPhoto);
+            userDao.close();
+            frist = false;
+        }
+    }
+
+
 }

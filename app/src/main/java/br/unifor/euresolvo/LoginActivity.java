@@ -59,19 +59,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        try{
-            boolean logout = getIntent().getExtras().getBoolean("logout");
-            if (logout){
 
-            }
-        }catch (Exception e){
-            // logout não execultado
-        }
         bar.hide();
         dao = new UserDao(this);
 
         if(!dao.isEmpy()){
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }else {
+            try{
+                boolean logout = getIntent().getExtras().getBoolean("logout");
+                if (logout){
+                    new UserDao(getApplicationContext()).reset();
+                }
+            }catch (Exception e){
+                // logout não execultado
+            }
         }
 
     }
@@ -96,12 +98,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             GoogleSignInAccount acct = result.getSignInAccount();
             salvarUser(acct);
             hideProgressDialog();
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//
-//            updateUI(true);
-//        } else {
-//            // Signed out, show unauthenticated UI.
-//            updateUI(false);
+            startActivity(new Intent(LoginActivity.this, CadastreActivity.class));
         }
     }
 
@@ -110,17 +107,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         dao.salve(userBeam);
     }
 
-    private void updateUI(boolean signedIn) {
-        if (signedIn) {
-            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-        } else {
-
-
-            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
-        }
-    }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
