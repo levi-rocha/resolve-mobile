@@ -17,11 +17,10 @@ import br.unifor.euresolvo.R;
 
 public class CadastreActivity extends AppCompatActivity {
 
-    private static final long SPLASH_TIME_OUT = 1000;
+    private static final long SPLASH_TIME_OUT = 500;
     private int idType;
     private UserBean userBean;
     private UserDao userDao;
-    private boolean frist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,6 @@ public class CadastreActivity extends AppCompatActivity {
         idType = 0;
         userDao = new UserDao(getApplicationContext());
         userBean = userDao.consult();
-        frist = true;
         carregarFoto();
     }
 
@@ -63,19 +61,12 @@ public class CadastreActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(frist) {
                     ImageView imageViewPhoto = (ImageView) findViewById(R.id.imageView_CadastroFoto);
                     Picasso.with(getApplicationContext()).load(userBean.getPersonPhoto()).resize(500, 500).centerCrop().into(imageViewPhoto);
-                    frist = false;
-                }
+
             }
         }, SPLASH_TIME_OUT);
     }
 
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
 
-
-    }
 }

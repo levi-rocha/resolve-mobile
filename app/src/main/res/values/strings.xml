@@ -76,6 +76,9 @@
     <string name="tl_unnamed">Ainda não sabemos quem você é</string>
     <string name="tl_unnamedtwo">Faça login abaixo e tenha acesso a todas as funções do aplicativo</string>
     <string name="app_version">VERSÃO DO APLICATIVO 1.0.1</string>
+    <string name="title_activity_my_posts">MyPosts</string>
+    <string name="title_activity_detail_post">DetailPost</string>
+    <string name="title_activity_reposts">Reposts</string>
 
 
 </resources>

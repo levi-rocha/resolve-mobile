@@ -1,8 +1,6 @@
 package br.unifor.euresolvo;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -14,23 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
-import br.unifor.euresolvo.Dao.UserDao;
-
-public class MainActivity extends AppCompatActivity
+public class Reposts extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private static final long SPLASH_TIME_OUT = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_reposts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,7 +40,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        carregarFoto();
     }
 
     @Override
@@ -67,7 +55,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.reposts, menu);
         return true;
     }
 
@@ -92,24 +80,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_my_posts) {
-            startActivity(new Intent(getApplicationContext(), MyPosts.class));
-        } else if (id == R.id.nav_reposts) {
-            startActivity(new Intent(getApplicationContext(), Reposts.class));
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_logoff) {
-            Bundle parametros = new Bundle();
-            parametros.putBoolean("logout", true);
-            new UserDao(getApplicationContext()).reset();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.putExtras(parametros);
-            startActivity(intent);
-            finish();
+        } else if (id == R.id.nav_send) {
 
         }
 
@@ -117,22 +98,4 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-    private void carregarFoto() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                UserDao userDao = new UserDao(getApplicationContext());
-                TextView textViewName = (TextView) findViewById(R.id.textView_navUserName);
-                TextView textViewEmail = (TextView) findViewById(R.id.textView_navUserEmail);
-                ImageView imageViewPhoto = (ImageView) findViewById(R.id.imageView_navUserPhoto);
-                textViewName.setText(userDao.consult().getPersonName());
-                textViewEmail.setText(userDao.consult().getPersonEmail());
-                Picasso.with(getApplicationContext()).load(userDao.consult().getPersonPhoto()).resize(200, 180).centerCrop().into(imageViewPhoto);
-                userDao.close();
-            }
-        }, SPLASH_TIME_OUT);
-    }
-
 }
