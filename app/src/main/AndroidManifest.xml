@@ -17,7 +17,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CadastreActivity"></activity>
+        <activity android:name=".CadastreActivity" />
+        <activity
+            android:name=".MyPosts"
+            android:label="@string/title_activity_my_posts"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.unifor.euresolvo.MainActivity" />
+        </activity>
+        <activity
+            android:name=".DetailPost"
+            android:label="@string/title_activity_detail_post"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.unifor.euresolvo.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Reposts"
+            android:label="@string/title_activity_reposts"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.unifor.euresolvo.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
