@@ -96,12 +96,14 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(), MyPosts.class));
         } else if (id == R.id.nav_reposts) {
             startActivity(new Intent(getApplicationContext(), Reposts.class));
+        /*
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
+        */
         } else if (id == R.id.nav_logoff) {
             Bundle parametros = new Bundle();
             parametros.putBoolean("logout", true);
