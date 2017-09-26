@@ -4,6 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,10 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -24,8 +25,41 @@ import br.unifor.euresolvo.Bean.PostBean;
 public class MyPosts extends MainActivity {
 
     ArrayList<PostBean> postBeans;
-    ListView listView;
     private static PostAdapter postAdapter;
+
+    RecyclerView mRecyclerView;
+
+    private void setupRecycler() {
+        //Criando lista para teste
+        postBeans = new ArrayList<>();
+
+        postBeans.add(new PostBean(
+                "Lorem Ipsum", "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos.",
+                "Joao", 10));
+        postBeans.add(new PostBean(
+                "Lorem Ipsum 2", "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos.",
+                "Antonio", 15));
+        postBeans.add(new PostBean(
+                "Lorem Ipsum 3", "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos.",
+                "José", 25));
+
+        // Configurando o gerenciador de layout para ser uma lista.
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        // Adiciona o adapter que irá anexar os objetos à lista.
+        // Está sendo criado com lista vazia, pois será preenchida posteriormente.
+        postAdapter = new PostAdapter(postBeans);
+        mRecyclerView.setAdapter(postAdapter);
+
+        // Configurando um dividr entre linhas, para uma melhor visualização.
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
+        mRecyclerView.addItemDecoration(itemDecorator);
+
+        //mRecyclerView.addItemDecoration(
+          //      new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,31 +86,8 @@ public class MyPosts extends MainActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        listView=(ListView)findViewById(R.id.post_list);
-
-        postBeans = new ArrayList<>();
-
-        postBeans.add(new PostBean("Lorem Ipsum", "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos."));
-        postBeans.add(new PostBean("De onde ele vem?", "Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico."));
-        postBeans.add(new PostBean("Nullam sed sagittis felis.","Pellentesque quis orci quis sem finibus suscipit. Nunc laoreet, ante a posuere scelerisque, nisi ex convallis augue, id dictum neque mauris vitae lectus. Nunc mauris felis, porta non congue et, varius at mauris. Praesent facilisis massa in dolor vehicula, sed aliquet massa cursus. Vestibulum quis elementum lectus. Sed dignissim ante eget porta molestie. Nunc at interdum orci. Phasellus molestie augue ut condimentum feugiat. Mauris quis augue ut nisl tempus finibus eget blandit justo. Nam porta dolor sit amet nisi consequat, a vehicula quam rutrum. Maecenas felis augue, auctor quis nisi eget, faucibus tristique lacus. Maecenas est risus, pretium vel volutpat vitae, venenatis non diam. Sed non feugiat massa. Mauris a est euismod, tincidunt leo ut, tempor nulla."));
-        postBeans.add(new PostBean(" hagsduig?","gdkegfegfl skqdogqw kdbqowdgoef"));
-
-        postAdapter = new PostAdapter(postBeans,getApplicationContext());
-
-        listView.setAdapter(postAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                PostBean postBean = postBeans.get(position);
-
-                Intent intent = new Intent(getApplicationContext(), DetailPost.class);
-                intent.putExtra("titulo", postBean.getTitulo());
-                intent.putExtra("descricao", postBean.getDescricao());
-                startActivity(intent);
-            }
-        });
-
+        mRecyclerView = (RecyclerView) findViewById(R.id.post_recycler_view_list);
+        setupRecycler();
     }
 
 
