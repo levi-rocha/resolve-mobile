@@ -1,5 +1,6 @@
 package br.unifor.euresolvo;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.DialogInterface;
@@ -31,12 +32,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import br.unifor.euresolvo.Bean.UserBean;
+import br.unifor.euresolvo.Service.MyUploadService;
 
 public class CadastreEmailActivity extends AppCompatActivity {
 
@@ -48,7 +56,6 @@ public class CadastreEmailActivity extends AppCompatActivity {
     private int GALLERY = 1, CAMERA = 2;
     private Uri uri;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +66,7 @@ public class CadastreEmailActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.editTextEmail);
         password = (EditText) findViewById(R.id.editTextPass);
         imageviewFoto = (ImageView) findViewById(R.id.imageView_CadastroFoto);
+//        mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
     private void showPictureDialog(){
@@ -107,7 +115,7 @@ public class CadastreEmailActivity extends AppCompatActivity {
         if (requestCode == GALLERY) {
             if (data != null) {
                 Uri contentURI = data.getData();
-                uri = contentURI;
+
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     String path = saveImage(bitmap);
@@ -118,6 +126,35 @@ public class CadastreEmailActivity extends AppCompatActivity {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "Falhou em salvar a foto", Toast.LENGTH_SHORT).show();
                 }
+
+                MyUploadService myUploadService = new MyUploadService();
+                myUploadService.uploadFromUri(contentURI);
+                uri = myUploadService.getDownloadUriResults();
+
+//                try{
+//
+//                    StorageReference riversRef = mStorageRef.child("images/users/users.jpg");
+//
+//                    riversRef.putFile(contentURI)
+//                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                                @Override
+//                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                                    // Get a URL to the uploaded content
+//                                    uri = taskSnapshot.getDownloadUrl();
+//                                    Toast.makeText(getApplicationContext(), uri.toString(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            })
+//                            .addOnFailureListener(new OnFailureListener() {
+//                                @Override
+//                                public void onFailure(@NonNull Exception exception) {
+//                                    // Handle unsuccessful uploads
+//                                    // ...
+//                                }
+//                            });
+//
+//                }catch (Exception e){
+//                    Toast.makeText(getApplicationContext(), "Falhou em upar a foto", Toast.LENGTH_SHORT).show();
+//                }
             }
 
         } else if (requestCode == CAMERA) {
