@@ -1,6 +1,5 @@
 package br.unifor.euresolvo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,38 +7,35 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 
 import br.unifor.euresolvo.Adapter.PostAdapter;
-import br.unifor.euresolvo.Bean.PostBean;
+import br.unifor.euresolvo.Bean.PostBeanOLD;
 
 public class MyPosts extends MainActivity {
 
-    ArrayList<PostBean> postBeans;
+    ArrayList<PostBeanOLD> postBeanOLDs;
     private static PostAdapter postAdapter;
 
     RecyclerView mRecyclerView;
 
     private void setupRecycler() {
         //Criando lista para teste
-        postBeans = new ArrayList<>();
+        postBeanOLDs = new ArrayList<>();
 
-        postBeans.add(new PostBean(
+        postBeanOLDs.add(new PostBeanOLD(
                 "Lorem Ipsum", "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos.",
                 "Joao", 10));
-        postBeans.add(new PostBean(
+        postBeanOLDs.add(new PostBeanOLD(
                 "Lorem Ipsum 2", "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos.",
                 "Antonio", 15));
-        postBeans.add(new PostBean(
+        postBeanOLDs.add(new PostBeanOLD(
                 "Lorem Ipsum 3", "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos.",
                 "José", 25));
 
@@ -49,7 +45,7 @@ public class MyPosts extends MainActivity {
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         // Está sendo criado com lista vazia, pois será preenchida posteriormente.
-        postAdapter = new PostAdapter(postBeans);
+        postAdapter = new PostAdapter(postBeanOLDs);
         mRecyclerView.setAdapter(postAdapter);
 
         // Configurando um dividr entre linhas, para uma melhor visualização.

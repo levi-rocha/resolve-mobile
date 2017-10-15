@@ -1,53 +1,73 @@
 package br.unifor.euresolvo.Bean;
 
 /**
- * Created by Mbyte on 11/09/2017.
+ * Created by SamuelSantiago on 15/10/2017.
  */
 
 public class PostBean {
 
-    private String titulo;
-    private String descricao;
-    private String usuario;
-    private int qtdLikes;
+    private int id;
+    private String title;
+    private String authorUsername;
+    private int voteCount;
+    private String date;
+    private String contentPreview;
 
+    public PostBean(){
 
-    public PostBean(String titulo, String descricao, String usuario, int qtdLikes) {
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.usuario = usuario;
-        this.qtdLikes = qtdLikes;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public PostBean(String title, String content, String author) {
+        this.title = title;
+        this.contentPreview = content;
+        this.authorUsername = author;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public int getId() {
+        return id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public String getTitle() {
+        return title;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public String getAuthorUsername() {
+        return authorUsername;
     }
 
-    public int getQtdLikes() {
-        return qtdLikes;
+    public void setAuthorUsername(String authorUsername) {
+        this.authorUsername = authorUsername;
     }
 
-    public void setQtdLikes(int qtdLikes) {
-        this.qtdLikes = qtdLikes;
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getContentPreview() {
+        return contentPreview;
+    }
+
+    public void setContentPreview(String contentPreview) {
+        this.contentPreview = contentPreview;
     }
 }

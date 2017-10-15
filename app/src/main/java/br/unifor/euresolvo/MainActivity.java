@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,17 +17,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import br.unifor.euresolvo.Dao.UserDao;
+import br.unifor.euresolvo.Service.API;
+import br.unifor.euresolvo.Service.ServicePostsGET;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final long SPLASH_TIME_OUT = 1000;
+    private RecyclerView rv;
+    public ProgressBar progressBar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         carregarFoto();
+
+
+        //Montando lista
+        rv = (RecyclerView)findViewById(R.id.rv);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        //Chamando o Service para buscar os dados e preencher lista
+        ServicePostsGET servicePostsGET =new ServicePostsGET();
+        servicePostsGET.toRecyclerView(API.postsGET(), rv, progressBar);
+
     }
 
     @Override

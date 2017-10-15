@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import br.unifor.euresolvo.Bean.PostBean;
+import br.unifor.euresolvo.Bean.PostBeanOLD;
 import br.unifor.euresolvo.Holder.PostHolder;
 import br.unifor.euresolvo.R;
 
 public class PostAdapter extends RecyclerView.Adapter<PostHolder>{
-    private final List<PostBean> mPosts;
+    private final List<PostBeanOLD> mPosts;
 
     public PostAdapter(ArrayList posts) {
         mPosts = posts;
@@ -51,11 +51,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostHolder>{
         return mPosts != null ? mPosts.size() : 0;
     }
 
-    public void updateList(PostBean post) {
+    public void updateList(PostBeanOLD post) {
         insertItem(post);
     }
 
-    private void insertItem(PostBean post) {
+    private void insertItem(PostBeanOLD post) {
         mPosts.add(post);
         notifyItemInserted(getItemCount());
     }
