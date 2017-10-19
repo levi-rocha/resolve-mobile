@@ -59,4 +59,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostHolder>{
         mPosts.add(post);
         notifyItemInserted(getItemCount());
     }
+
+    public void removeItem(int position) {
+        mPosts.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mPosts.size());
+    }
 }

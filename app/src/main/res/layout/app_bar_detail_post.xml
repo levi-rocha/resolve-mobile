@@ -71,6 +71,12 @@
             android:textStyle="bold"
             tools:text="Soluções" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/solucao_recycler_view_list"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            tools:listitem="@layout/solucao_list_item" />
+
         <TextView
             android:id="@+id/textView6"
             android:layout_width="match_parent"
@@ -84,7 +90,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/comment_recycler_view_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="135dp"
             tools:listitem="@layout/comment_list_item" />
     </LinearLayout>
 

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -53,6 +54,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.unifor.euresolvo.MainActivity" />
         </activity>
+        <activity
+            android:name=".Home"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -79,6 +79,7 @@
     <string name="title_activity_my_posts">MyPosts</string>
     <string name="title_activity_detail_post">DetailPost</string>
     <string name="title_activity_reposts">Reposts</string>
+    <string name="title_activity_home">Home</string>
 
 
 </resources>

@@ -1,8 +1,5 @@
 package br.unifor.euresolvo.Bean;
 
-/**
- * Created by Mbyte on 11/09/2017.
- */
 
 public class PostBean {
 

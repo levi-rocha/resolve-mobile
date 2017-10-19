@@ -21,6 +21,7 @@ public class PostHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     public PostHolder(View itemView) {
         super(itemView);
+        //Pegando as referencias dos textviews da view
         context = itemView.getContext();
         itemView.setOnClickListener(this);
         txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
@@ -31,11 +32,13 @@ public class PostHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        //Pegando os valores e passando para outra Activity atraves do Intent
         Intent intent = new Intent(context, DetailPost.class);
         intent.putExtra("titulo", txtTitle.getText());
         intent.putExtra("descricao", txtDescription.getText());
         intent.putExtra("qtd", txtQtd.getText());
         intent.putExtra("usuario", txtUsuario.getText());
+        //Startando a Activity
         context.startActivity(intent);
     }
 

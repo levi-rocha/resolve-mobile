@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
         ActionBar bar = getSupportActionBar();
 
-        startActivity(new Intent(LoginActivity.this, MyPosts.class));
+        startActivity(new Intent(LoginActivity.this, Home.class));
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and

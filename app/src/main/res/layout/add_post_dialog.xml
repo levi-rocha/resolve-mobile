@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:background="#3E80B4"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="Qual o seu problema?"
+        android:textColor="@android:color/white"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/txtTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Titulo"
+        android:inputType="textPersonName"
+        android:text="Primeiro Post App" />
+
+    <EditText
+        android:id="@+id/txtProblema"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.52"
+        android:ems="10"
+        android:hint="Descreva..."
+        android:inputType="textMultiLine"
+        android:text="Primeira Descricao App" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="#3E80B4"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_create"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="Salvar"
+            android:textColor="#5DBCD2"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_cancelar"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:text="Cancelar"
+            android:textColor="#5DBCD2"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>
