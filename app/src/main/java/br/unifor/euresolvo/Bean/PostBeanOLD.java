@@ -4,7 +4,7 @@ package br.unifor.euresolvo.Bean;
  * Created by Mbyte on 11/09/2017.
  */
 
-public class PostBean {
+public class PostBeanOLD {
 
     private String titulo;
     private String descricao;
@@ -12,7 +12,7 @@ public class PostBean {
     private int qtdLikes;
 
 
-    public PostBean(String titulo, String descricao, String usuario, int qtdLikes) {
+    public PostBeanOLD(String titulo, String descricao, String usuario, int qtdLikes) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.usuario = usuario;

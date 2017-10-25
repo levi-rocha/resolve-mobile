@@ -5,13 +5,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
-import java.net.URI;
 
 /**
  * Created by SamuelSantiago on 28/08/2017.
  */
 
-public class UserBean implements Parcelable {
+public class UserBeanOLD implements Parcelable {
 
 
     private int id;
@@ -19,24 +18,38 @@ public class UserBean implements Parcelable {
     private String personEmail;
     private String personId;
     private Uri personPhoto;
+    private String password;
     private int personType;
 
 
-    public UserBean(Parcel in) {
+    public UserBeanOLD(Parcel in) {
         readFromParcelable(in);
     }
 
-    public UserBean(){
+    public UserBeanOLD(){
     }
 
-    public UserBean(String personName, String personEmail, String personId, Uri personPhoto){
+    public UserBeanOLD(String personName, String personEmail, String personId, Uri personPhoto){
         this.personName = personName;
         this.personEmail = personEmail;
         this.personId = personId;
         this.personPhoto = personPhoto;
     }
+    public UserBeanOLD(int id,String personName, String personEmail){
+        this.personName = personName;
+        this.personEmail = personEmail;
+        this.id = id;
+    }
 
-    public UserBean(int id, String personName, String personEmail, String personId, Uri personPhoto, int personType) {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserBeanOLD(int id, String personName, String personEmail, String personId, Uri personPhoto, int personType) {
         this.id = id;
         this.personName = personName;
         this.personEmail = personEmail;
@@ -57,12 +70,12 @@ public class UserBean implements Parcelable {
 
     @SuppressWarnings("rawtypes")
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public UserBean createFromParcel(Parcel in) {
-            return new UserBean(in);
+        public UserBeanOLD createFromParcel(Parcel in) {
+            return new UserBeanOLD(in);
         }
 
-        public UserBean[] newArray(int size) {
-            return new UserBean[size];
+        public UserBeanOLD[] newArray(int size) {
+            return new UserBeanOLD[size];
         }
     };
 

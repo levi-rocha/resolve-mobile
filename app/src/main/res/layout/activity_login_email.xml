@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.unifor.euresolvo.LoginEmail">
+
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView9"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickGoCadastreEmail"
+        android:text="Cadrastre-se"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="394dp" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextSenhaLogin"
+        android:layout_alignEnd="@+id/editTextEmailLogin"
+        android:layout_alignStart="@+id/editTextEmailLogin"
+        android:layout_marginBottom="56dp"
+        android:text="Favor inseira abaixo seu e-mail e senha para continuar"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/editTextEmailLogin"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="E-mail:"
+        android:inputType="textEmailAddress"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/editTextSenhaLogin"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/editTextEmailLogin"
+        android:layout_below="@+id/editTextEmailLogin"
+        android:hint="Senha:"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/buttonLoginEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextSenhaLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="29dp"
+        android:onClick="onClickLogin"
+        android:text="Entrar com o email" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:srcCompat="@drawable/logo_menu2"
+        android:layout_below="@+id/textView8"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Bem vindo!"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonLoginEmail"
+        android:layout_centerHorizontal="true"
+        android:text="- ou -" />
+
+    <ProgressBar
+        android:id="@+id/progressBarLoginEmail"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/editTextEmailLogin"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

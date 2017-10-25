@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "435387624953",
-    "project_id": "firebase-eu-resolvo"
+    "firebase_url": "https://fir-eu-resolvo.firebaseio.com",
+    "project_id": "firebase-eu-resolvo",
+    "storage_bucket": "firebase-eu-resolvo.appspot.com"
   },
   "client": [
     {
@@ -12,6 +14,10 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "435387624953-v4a26672nbpbrfq1mhtsp373obed1rts.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "435387624953-hmpui0ltc5btg5goqb6224c11dppf168.apps.googleusercontent.com",
           "client_type": 3
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435387624953-v4a26672nbpbrfq1mhtsp373obed1rts.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

@@ -13,7 +13,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in_short">Entrar com o Google</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -68,7 +68,6 @@
     <string name="connections_fmt">Connections: %1$s</string>
     <string name="msg_contacts_failed">Get contacts failed.</string>
 
-    <!-- TODO(user): replace with your real server client ID -->
     <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
              from https://console.developers.google.com/ -->
     <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
@@ -80,5 +79,17 @@
     <string name="title_activity_detail_post">DetailPost</string>
     <string name="title_activity_reposts">Reposts</string>
 
+
+    <!-- FIREBASE-->
+
+    <string name="progress_downloading">Downloading…</string>
+    <string name="progress_uploading">Uploading…</string>
+    <string name="progress_auth">Signing In…</string>
+
+    <string name="upload_success">Upload finished</string>
+    <string name="upload_failure">Upload failed</string>\
+
+    <string name="download_success">Download finished</string>
+    <string name="download_failure">Download failure</string>
 
 </resources>
