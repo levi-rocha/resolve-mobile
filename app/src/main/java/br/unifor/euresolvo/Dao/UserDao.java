@@ -7,7 +7,7 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import br.unifor.euresolvo.Bean.UserBean;
+import br.unifor.euresolvo.Bean.UserBeanOLD;
 
 /**
  * Created by SamuelSantiago on 28/08/2017.
@@ -75,15 +75,15 @@ public class UserDao extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void salve(UserBean userBean){
+    public void salve(UserBeanOLD userBeanOLD){
         reset();
         ContentValues valores = new ContentValues();
 
-        valores.put("personName", userBean.getPersonName());
-        valores.put("personEmail", userBean.getPersonEmail());
-        valores.put("personId", userBean.getPersonId());
-        valores.put("personPhoto", userBean.getPersonPhoto().toString());
-        valores.put("personType", userBean.getPersonType());
+        valores.put("personName", userBeanOLD.getPersonName());
+        valores.put("personEmail", userBeanOLD.getPersonEmail());
+        valores.put("personId", userBeanOLD.getPersonId());
+        valores.put("personPhoto", userBeanOLD.getPersonPhoto().toString());
+        valores.put("personType", userBeanOLD.getPersonType());
 
         getWritableDatabase().insert(TABELA, null, valores);
     }
@@ -99,20 +99,20 @@ public class UserDao extends SQLiteOpenHelper {
         }
     }
 
-    public UserBean consult(){
-        UserBean userBean = new UserBean();
+    public UserBeanOLD consult(){
+        UserBeanOLD userBeanOLD = new UserBeanOLD();
         String sql = "Select * from user";
         Cursor cursor = getReadableDatabase().rawQuery(sql, null);
 
         try {
             while (cursor.moveToNext()) {
 
-                userBean.setId(cursor.getInt(0));
-                userBean.setPersonName(cursor.getString(1));
-                userBean.setPersonEmail(cursor.getString(2));
-                userBean.setPersonId(cursor.getString(3));
-                userBean.setPersonPhoto(Uri.parse(cursor.getString(4)));
-                userBean.setPersonType(cursor.getInt(5));
+                userBeanOLD.setId(cursor.getInt(0));
+                userBeanOLD.setPersonName(cursor.getString(1));
+                userBeanOLD.setPersonEmail(cursor.getString(2));
+                userBeanOLD.setPersonId(cursor.getString(3));
+                userBeanOLD.setPersonPhoto(Uri.parse(cursor.getString(4)));
+                userBeanOLD.setPersonType(cursor.getInt(5));
 
             }
         } catch (android.database.SQLException sqle) {
@@ -120,7 +120,7 @@ public class UserDao extends SQLiteOpenHelper {
             cursor.close();
         }
 
-        return userBean;
+        return userBeanOLD;
     }
 
     public void reset() {
@@ -133,7 +133,7 @@ public class UserDao extends SQLiteOpenHelper {
 
     public void pop(){
         reset();
-        salve(new UserBean("Samuel Santiago","sss.samuel@gmail.com","105715529606084433089", null));
+        salve(new UserBeanOLD("Samuel Santiago","sss.samuel@gmail.com","105715529606084433089", null));
     }
 
 }

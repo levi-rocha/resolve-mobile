@@ -4,7 +4,7 @@ package br.unifor.euresolvo.Bean;
  * Created by SamuelSantiago on 15/10/2017.
  */
 
-public class PostBean {
+public class PostsBean {
 
     private int id;
     private String title;
@@ -13,11 +13,11 @@ public class PostBean {
     private String date;
     private String contentPreview;
 
-    public PostBean(){
+    public PostsBean(){
 
     }
 
-    public PostBean(String title, String content, String author) {
+    public PostsBean(String title, String content, String author) {
         this.title = title;
         this.contentPreview = content;
         this.authorUsername = author;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.unifor.euresolvo.Adapter.PostsAdapter;
-import br.unifor.euresolvo.Bean.PostBean;
+import br.unifor.euresolvo.Bean.PostsBean;
 import br.unifor.euresolvo.Parcer.PostsJSONParcer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -23,12 +23,12 @@ import okhttp3.Response;
 
 public class ServicePostsGET {
 
-    List<PostBean> postBeanList;
+    List<PostsBean> postsBeanList;
     private String stringResults = "";
     TextView textView;
     private ArrayList<String> strings;
     private int tag;
-    ArrayList<PostBean>postList = new ArrayList<>();
+    ArrayList<PostsBean>postList = new ArrayList<>();
     RecyclerView rv;
     ProgressBar progressBar;
 
@@ -47,7 +47,7 @@ public class ServicePostsGET {
         tag = 2;
     }
 
-    public void toPostsArray(String url, ArrayList<PostBean>postList){
+    public void toPostsArray(String url, ArrayList<PostsBean>postList){
         OkHttpHandler okHttpHandler= new OkHttpHandler();
         okHttpHandler.execute(url);
         this.postList = postList;
@@ -93,27 +93,27 @@ public class ServicePostsGET {
         protected void onPostExecute(String results) {
             super.onPostExecute(results);
 
-            postBeanList= PostsJSONParcer.parseDados(results);
+            postsBeanList = PostsJSONParcer.parseDados(results);
 
             switch (tag){
                 case 1:
-                    if (postBeanList != null){
-                        for (PostBean post: postBeanList) {
+                    if (postsBeanList != null){
+                        for (PostsBean post: postsBeanList) {
                             stringResults += post.getTitle() + "\n";
                         }
                         textView.setText(stringResults);
                     }
                     break;
                 case 2:
-                    if (postBeanList != null){
-                        for (PostBean post: postBeanList) {
+                    if (postsBeanList != null){
+                        for (PostsBean post: postsBeanList) {
                             strings.add(post.getTitle() + "\n");
                         }
                     }
                     break;
                 case 3:
-                    if (postBeanList != null){
-                        for (PostBean post: postBeanList) {
+                    if (postsBeanList != null){
+                        for (PostsBean post: postsBeanList) {
                             postList.add(post);
                         }
                         PostsAdapter adapter = new PostsAdapter(postList);

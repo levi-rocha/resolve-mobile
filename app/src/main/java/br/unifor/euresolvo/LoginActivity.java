@@ -2,15 +2,11 @@ package br.unifor.euresolvo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.google.android.gms.auth.api.Auth;
@@ -18,9 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import br.unifor.euresolvo.Bean.*;
@@ -103,7 +97,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void salvarUser(GoogleSignInAccount acct) {
-        UserBean userBeam = new UserBean(acct.getDisplayName(), acct.getEmail(),acct.getId(), acct.getPhotoUrl());
+        UserBeanOLD userBeam = new UserBeanOLD(acct.getDisplayName(), acct.getEmail(),acct.getId(), acct.getPhotoUrl());
+        userBeam.setPassword( acct.getIdToken());
         dao.salve(userBeam);
     }
 

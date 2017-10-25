@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-import br.unifor.euresolvo.Bean.PostBean;
+import br.unifor.euresolvo.Bean.PostsBean;
 import br.unifor.euresolvo.R;
 
 /**
@@ -16,8 +16,8 @@ import br.unifor.euresolvo.R;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHolder>{
 
-    ArrayList<PostBean> posts;
-    public PostsAdapter(ArrayList<PostBean> postBeen){
+    ArrayList<PostsBean> posts;
+    public PostsAdapter(ArrayList<PostsBean> postBeen){
         this.posts = postBeen;
     }
 

@@ -1,6 +1,5 @@
 package br.unifor.euresolvo;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.DialogInterface;
@@ -10,40 +9,21 @@ import android.icu.util.Calendar;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import br.unifor.euresolvo.Bean.UserBean;
+import br.unifor.euresolvo.Bean.UserBeanOLD;
 import br.unifor.euresolvo.Service.MyUploadService;
 
 public class CadastreEmailActivity extends AppCompatActivity {
@@ -203,13 +183,14 @@ public class CadastreEmailActivity extends AppCompatActivity {
     }
 
     public void onClick_Continue (View view){
-        UserBean userBean = new UserBean();
-        userBean.setPersonName(name.getText().toString());
-        userBean.setPersonEmail(email.getText().toString());
-        userBean.setPersonId(password.getText().toString());
-        userBean.setPersonPhoto(uri);
+        UserBeanOLD userBeanOLD = new UserBeanOLD();
+        userBeanOLD.setPersonName(name.getText().toString());
+        userBeanOLD.setPersonEmail(email.getText().toString());
+        userBeanOLD.setPersonId(password.getText().toString());
 
-        startActivity(new Intent(getApplicationContext(), CadastreActivity.class));
+//        userBeanOLD.setPersonPhoto(uri);
+
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
     }
 }

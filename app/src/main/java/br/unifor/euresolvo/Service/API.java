@@ -39,6 +39,10 @@ public final class API {
         return url + "reports";
     }
 
+    public static String loginPOST(){
+        return url + "loginEmail";
+    }
+
     public static String reportsGET(int id){
         return url + "reports/" + id;
     }

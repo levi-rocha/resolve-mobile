@@ -6,20 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import br.unifor.euresolvo.Bean.UserBean;
+import br.unifor.euresolvo.Bean.UserBeanOLD;
 import br.unifor.euresolvo.Dao.UserDao;
-import br.unifor.euresolvo.R;
 
 public class CadastreActivity extends AppCompatActivity {
 
     private static final long SPLASH_TIME_OUT = 500;
     private int idType;
-    private UserBean userBean;
+    private UserBeanOLD userBeanOLD;
     private UserDao userDao;
 
     @Override
@@ -32,7 +30,7 @@ public class CadastreActivity extends AppCompatActivity {
 
         idType = 0;
         userDao = new UserDao(getApplicationContext());
-        userBean = userDao.consult();
+        userBeanOLD = userDao.consult();
         carregarFoto();
     }
 
@@ -48,9 +46,9 @@ public class CadastreActivity extends AppCompatActivity {
         if(idType == 0){
             Toast.makeText(getApplicationContext(),"Favor escolher tipo de conta antes de continuar", Toast.LENGTH_SHORT).show();
         }else {
-            userBean.setPersonType(idType);
+            userBeanOLD.setPersonType(idType);
             userDao.reset();
-            userDao.salve(userBean);
+            userDao.salve(userBeanOLD);
             userDao.close();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
@@ -62,7 +60,8 @@ public class CadastreActivity extends AppCompatActivity {
             @Override
             public void run() {
                     ImageView imageViewPhoto = (ImageView) findViewById(R.id.imageView_CadastroFoto);
-                    Picasso.with(getApplicationContext()).load(userBean.getPersonPhoto()).resize(500, 500).centerCrop().into(imageViewPhoto);
+                    if(userBeanOLD.getPersonPhoto() != null)
+                    Picasso.with(getApplicationContext()).load(userBeanOLD.getPersonPhoto()).resize(500, 500).centerCrop().into(imageViewPhoto);
 
             }
         }, SPLASH_TIME_OUT);

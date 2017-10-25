@@ -152,7 +152,9 @@ public class MainActivity extends AppCompatActivity
                 ImageView imageViewPhoto = (ImageView) findViewById(R.id.imageView_navUserPhoto);
                 textViewName.setText(userDao.consult().getPersonName());
                 textViewEmail.setText(userDao.consult().getPersonEmail());
-                Picasso.with(getApplicationContext()).load(userDao.consult().getPersonPhoto()).resize(200, 180).centerCrop().into(imageViewPhoto);
+                if(userDao.consult().getPersonPhoto() != null) {
+                    Picasso.with(getApplicationContext()).load(userDao.consult().getPersonPhoto()).resize(200, 180).centerCrop().into(imageViewPhoto);
+                }
                 userDao.close();
             }
         }, SPLASH_TIME_OUT);

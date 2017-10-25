@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unifor.euresolvo.Bean.PostBean;
+import br.unifor.euresolvo.Bean.PostsBean;
 
 /**
  * Created by SamuelSantiago on 13/10/2017.
@@ -15,27 +15,27 @@ import br.unifor.euresolvo.Bean.PostBean;
 
 public class PostsJSONParcer {
 
-    public static List<PostBean> parseDados(String content) {
+    public static List<PostsBean> parseDados(String content) {
         try {
             JSONArray jsonArray = new JSONArray(content);
-            List<PostBean> postBeanList = new ArrayList<>();
+            List<PostsBean> postsBeanList = new ArrayList<>();
 
             for (int i = 0; i< jsonArray.length(); i++){
 
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                PostBean postBean = new PostBean();
+                PostsBean postsBean = new PostsBean();
 
-                postBean.setId(jsonObject.getInt("id"));
-                postBean.setTitle(jsonObject.getString("title"));
-                postBean.setAuthorUsername(jsonObject.getString("authorUsername"));
-                postBean.setVoteCount(jsonObject.getInt("voteCount"));
-                postBean.setDate(jsonObject.getString("date"));
-                postBean.setContentPreview(jsonObject.getString("contentPreview"));
+                postsBean.setId(jsonObject.getInt("id"));
+                postsBean.setTitle(jsonObject.getString("title"));
+                postsBean.setAuthorUsername(jsonObject.getString("authorUsername"));
+                postsBean.setVoteCount(jsonObject.getInt("voteCount"));
+                postsBean.setDate(jsonObject.getString("date"));
+                postsBean.setContentPreview(jsonObject.getString("contentPreview"));
 
-                postBeanList.add(postBean);
+                postsBeanList.add(postsBean);
             }
 
-            return postBeanList;
+            return postsBeanList;
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
