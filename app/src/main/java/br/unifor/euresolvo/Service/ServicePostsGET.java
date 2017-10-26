@@ -17,9 +17,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by SamuelSantiago on 13/10/2017.
- */
 
 public class ServicePostsGET {
 

@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_my_posts) {
             startActivity(new Intent(getApplicationContext(), MyPosts.class));
         } else if (id == R.id.nav_reposts) {
-            startActivity(new Intent(getApplicationContext(), Reposts.class));
+            startActivity(new Intent(getApplicationContext(), Reports.class));
         /*
         } else if (id == R.id.nav_slideshow) {
 

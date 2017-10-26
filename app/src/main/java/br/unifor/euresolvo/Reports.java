@@ -3,6 +3,10 @@ package br.unifor.euresolvo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +16,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
-public class Reposts extends AppCompatActivity
+import java.util.ArrayList;
+
+import br.unifor.euresolvo.Adapter.ReportsAdapter;
+import br.unifor.euresolvo.Bean.ReportsBean;
+import br.unifor.euresolvo.Service.API;
+import br.unifor.euresolvo.Service.ServiceReportsGET;
+
+public class Reports extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ArrayList<ReportsBean> reportBeans;
+    private static ReportsAdapter reportsAdapter;
+    RecyclerView mRecyclerView;
+    public ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +58,35 @@ public class Reposts extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.report_recycler_view_list);
+        setupRecycler();
+    }
+
+    private void setupRecycler() {
+        //Criando lista para teste
+        reportBeans = new ArrayList<>();
+
+        reportBeans.add(new ReportsBean(
+                "Menino do cachorro", "Que cachorro o que, eu nao sou cachorro nao! Que cachorro o que, eu nao sou cachorro nao!"));
+        reportBeans.add(new ReportsBean(
+                "fulano", "nao gostei. nao gostei. nao gostei. nao gostei."));
+        reportBeans.add(new ReportsBean(
+                "Seba", "Oi meu amigo, tudo bem? Este é um report teste, t bom?s"));
+
+        // Configurando o gerenciador de layout para ser uma lista.
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        reportsAdapter = new ReportsAdapter(reportBeans);
+        mRecyclerView.setAdapter(reportsAdapter);
+
+        ServiceReportsGET serviceReportsGET =new ServiceReportsGET();
+        serviceReportsGET.toRecyclerView(API.reportsGET(), mRecyclerView, progressBar);
+
     }
 
     @Override

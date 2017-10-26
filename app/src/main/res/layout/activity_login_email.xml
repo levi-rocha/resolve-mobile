@@ -60,14 +60,14 @@
         android:onClick="onClickLogin"
         android:text="Entrar com o email" />
 
-    <ImageView
+    <!-- <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         app:srcCompat="@drawable/logo_menu2"
         android:layout_below="@+id/textView8"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true" /> -->
 
     <TextView
         android:id="@+id/textView8"
