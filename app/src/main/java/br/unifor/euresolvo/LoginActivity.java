@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -17,9 +16,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import br.unifor.euresolvo.Bean.*;
-import br.unifor.euresolvo.Dao.*;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import br.unifor.euresolvo.Bean.UserBeanOLD;
+import br.unifor.euresolvo.Dao.UserDao;
+import br.unifor.euresolvo.Service.Callback;
+import br.unifor.euresolvo.Service.UserService;
 
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
@@ -37,6 +41,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ActionBar bar = getSupportActionBar();
+
+        Log.d("bla", "calling shit");
+        //TODO create all services following this callback pattern
+        UserService ser = new UserService();
+        ser.listUsers(new Callback() {
+            @Override
+            public void success(JSONArray result) {
+                showResult(result);
+            }
+        });
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and
@@ -100,6 +114,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         UserBeanOLD userBeam = new UserBeanOLD(acct.getDisplayName(), acct.getEmail(),acct.getId(), acct.getPhotoUrl());
         userBeam.setPassword( acct.getIdToken());
         dao.salve(userBeam);
+    }
+
+    private void showResult(JSONArray result) {
+        try {
+            Log.d("bla", result.getJSONObject(0).toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
