@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         UserService ser = new UserService();
         ser.listUsers(new Callback() {
             @Override
-            public void success(JSONArray result) {
+            public void onSuccess(JSONArray result) {
                 showResult(result);
             }
         });
