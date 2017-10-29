@@ -135,7 +135,7 @@ public class MyUploadService extends MyBaseTaskService {
     }
 
     /**
-     * Broadcast finished upload (success or failure).
+     * Broadcast finished upload (onSuccess or failure).
      * @return true if a running receiver received the broadcast.
      */
     private boolean broadcastUploadFinished(@Nullable Uri downloadUrl, @Nullable Uri fileUri) {

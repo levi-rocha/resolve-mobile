@@ -65,7 +65,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:srcCompat="@drawable/logo_menu2"
         android:layout_below="@+id/textView8"
         android:layout_centerHorizontal="true" />
 
