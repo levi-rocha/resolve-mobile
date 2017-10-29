@@ -1,12 +1,12 @@
 package br.unifor.euresolvo.DTO;
 
-import br.unifor.resolve.rest.entity.Permission;
-import br.unifor.resolve.rest.entity.Post;
-import br.unifor.resolve.rest.entity.User;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import br.unifor.euresolvo.Models.Permission;
+import br.unifor.euresolvo.Models.Post;
+import br.unifor.euresolvo.Models.User;
 
 public class UserDetailedDTO implements Serializable {
 

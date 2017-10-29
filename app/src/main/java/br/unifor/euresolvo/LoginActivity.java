@@ -22,8 +22,6 @@ import org.json.JSONException;
 
 import br.unifor.euresolvo.Bean.UserBeanOLD;
 import br.unifor.euresolvo.Dao.UserDao;
-import br.unifor.euresolvo.Service.Callback;
-import br.unifor.euresolvo.Service.UserService;
 
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
@@ -41,16 +39,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ActionBar bar = getSupportActionBar();
-
-        Log.d("bla", "calling shit");
-        //TODO create all services following this callback pattern
-        UserService ser = new UserService();
-        ser.listUsers(new Callback() {
-            @Override
-            public void onSuccess(JSONArray result) {
-                showResult(result);
-            }
-        });
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and
@@ -123,7 +111,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
