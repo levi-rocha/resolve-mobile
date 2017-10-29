@@ -19,9 +19,14 @@ import com.google.android.gms.common.api.Status;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import br.unifor.euresolvo.Bean.UserBeanOLD;
+import br.unifor.euresolvo.DTO.UserSimpleDTO;
 import br.unifor.euresolvo.Dao.UserDao;
+import br.unifor.euresolvo.Models.Permission;
+import br.unifor.euresolvo.Service.Callback;
+import br.unifor.euresolvo.Service.UserService;
 
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
@@ -39,6 +44,40 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ActionBar bar = getSupportActionBar();
+
+        /* ---- EXEMPLO UTILIZAÇÃO DE SERVICE ---- */
+        UserService userService = new UserService();
+        // Pegar primeiros 5 usuários
+        userService.getUsers(5, 0, new Callback() {
+            // Método chamado quando request é sucesso
+            @Override
+            public void onSuccess(JSONArray result) {
+                try {
+                    // Pegando primeiro objeto retornado
+                    // (verificar o doc da API para saber os atributos)
+                    JSONObject object = result.getJSONObject(0);
+                    // Transformando no DTO adequado
+                    UserSimpleDTO dto = new UserSimpleDTO();
+                    dto.setId(object.getLong("id"));
+                    dto.setUsername(object.getString("username"));
+                    dto.setEmail(object.getString("email"));
+                    JSONObject permissionJSON = object.getJSONObject("permission");
+                    Permission permission = new Permission();
+                    permission.setId(permissionJSON.getLong("id"));
+                    dto.setPermission(permission);
+                    Log.d("exemplo-service", "user retornado: " + dto.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            // Método chamado quando request da erro
+            @Override
+            public void onFailure(String errorResponse) {
+                // Logando o erro
+                Log.d("exemplo-service", "erro retornado: " + errorResponse);
+            }
+        });
+        /* ---- FIM DO EXEMPLO ---- */
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and
@@ -102,14 +141,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         UserBeanOLD userBeam = new UserBeanOLD(acct.getDisplayName(), acct.getEmail(),acct.getId(), acct.getPhotoUrl());
         userBeam.setPassword( acct.getIdToken());
         dao.salve(userBeam);
-    }
-
-    private void showResult(JSONArray result) {
-        try {
-            Log.d("bla", result.getJSONObject(0).toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
