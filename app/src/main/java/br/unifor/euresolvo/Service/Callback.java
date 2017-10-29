@@ -41,6 +41,8 @@ public class Callback extends JsonHttpResponseHandler {
 
     @Override
     public final void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+        if (errorResponse == null)
+            onFailure(null);
         try {
             onFailure(errorResponse.getJSONObject(0).getString("message"));
         } catch (JSONException e) {
@@ -50,6 +52,8 @@ public class Callback extends JsonHttpResponseHandler {
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+        if (errorResponse == null)
+            onFailure(null);
         try {
             onFailure(errorResponse.getString("message"));
         } catch (JSONException e) {

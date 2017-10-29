@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Permission permission = new Permission();
                     permission.setId(permissionJSON.getLong("id"));
                     dto.setPermission(permission);
-                    Log.d("exemplo-service", "user retornado: " + dto.toString());
+                    Log.d("exemplo-service", "email do user retornado: " + dto.getEmail());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
