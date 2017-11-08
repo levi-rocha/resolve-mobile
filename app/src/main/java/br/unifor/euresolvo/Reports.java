@@ -66,14 +66,14 @@ public class Reports extends AppCompatActivity
     private void setupRecycler() {
         //Criando lista para teste
         reportBeans = new ArrayList<>();
-
+        /*
         reportBeans.add(new ReportsBean(
                 "Menino do cachorro", "Que cachorro o que, eu nao sou cachorro nao! Que cachorro o que, eu nao sou cachorro nao!"));
         reportBeans.add(new ReportsBean(
                 "fulano", "nao gostei. nao gostei. nao gostei. nao gostei."));
         reportBeans.add(new ReportsBean(
                 "Seba", "Oi meu amigo, tudo bem? Este é um report teste, t bom?s"));
-
+        */
         // Configurando o gerenciador de layout para ser uma lista.
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);

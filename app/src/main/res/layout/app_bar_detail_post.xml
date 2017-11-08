@@ -34,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Título"
-            android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
             tools:text="Titulo Teste" />
@@ -44,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textColor="@color/black"
             android:textSize="24sp"
             tools:text="Esta e uma descricao teste, esta e uma descricao teste, esta e uma descricao teste." />
 
@@ -66,7 +64,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="Soluções"
-            android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
             tools:text="Soluções" />
@@ -76,7 +73,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Comentários"
-            android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
             tools:text="Comentários" />

@@ -48,11 +48,11 @@ public class MyPosts extends MainActivity {
         postAdapter = new PostAdapter(postBeanOLDs);
         mRecyclerView.setAdapter(postAdapter);
 
-        // Configurando um dividr entre linhas, para uma melhor visualização.
+        /* Configurando um dividr entre linhas, para uma melhor visualização.
         DividerItemDecoration itemDecorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
         mRecyclerView.addItemDecoration(itemDecorator);
-
+        */
         //mRecyclerView.addItemDecoration(
           //      new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
     }
