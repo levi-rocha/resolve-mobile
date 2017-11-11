@@ -28,7 +28,7 @@ public class EuResolvoRestClient {
         try {
             StringEntity entity = new StringEntity(object.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            client.post(null, url, entity, "application/json", handler);
+            client.post(null, makeUrl(url), entity, "application/json", handler);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -38,14 +38,14 @@ public class EuResolvoRestClient {
         try {
             StringEntity entity = new StringEntity(object.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            client.patch(null, url, entity, "application/json", handler);
+            client.patch(null, makeUrl(url), entity, "application/json", handler);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
 
     public void delete(String url, AsyncHttpResponseHandler handler) {
-        client.delete(url, handler);
+        client.delete(makeUrl(url), handler);
     }
 
     private static String makeUrl(String relativeUrl) {

@@ -20,9 +20,13 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+
+import br.unifor.euresolvo.Adapter.PostsAdapter;
 import br.unifor.euresolvo.Dao.UserDao;
-import br.unifor.euresolvo.Service.API;
-import br.unifor.euresolvo.Service.ServicePostsGET;
+import br.unifor.euresolvo.Service.Callback;
+import br.unifor.euresolvo.Service.Conversor;
+import br.unifor.euresolvo.Service.PostService;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,8 +71,12 @@ public class MainActivity extends AppCompatActivity
         progressBar.setVisibility(View.VISIBLE);
 
         //Chamando o Service para buscar os dados e preencher lista
-        ServicePostsGET servicePostsGET =new ServicePostsGET();
-        servicePostsGET.toRecyclerView(API.postsGET(), rv, progressBar);
+        new PostService().getPosts(20, 0, new Callback() {
+            @Override
+            public void onSuccess(JSONArray result) {
+                rv.setAdapter(new PostsAdapter(new Conversor().toListOfPostSimpleDTO(result)));
+            }
+        });
 
     }
 

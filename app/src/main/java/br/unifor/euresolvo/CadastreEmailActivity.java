@@ -1,30 +1,39 @@
 package br.unifor.euresolvo;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.icu.util.Calendar;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import br.unifor.euresolvo.Bean.UserBeanOLD;
+import br.unifor.euresolvo.DTO.UserSimpleDTO;
+import br.unifor.euresolvo.Models.User;
+import br.unifor.euresolvo.Service.Callback;
+import br.unifor.euresolvo.Service.Conversor;
 import br.unifor.euresolvo.Service.MyUploadService;
+import br.unifor.euresolvo.Service.UserService;
 
 public class CadastreEmailActivity extends AppCompatActivity {
 
@@ -36,17 +45,20 @@ public class CadastreEmailActivity extends AppCompatActivity {
     private int GALLERY = 1, CAMERA = 2;
     private Uri uri;
 
+    private SharedPreferences.Editor prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastre_email);
-
 
         name = (EditText) findViewById(R.id.editTextName);
         email = (EditText) findViewById(R.id.editTextEmail);
         password = (EditText) findViewById(R.id.editTextPass);
         imageviewFoto = (ImageView) findViewById(R.id.imageView_CadastroFoto);
 //        mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
     }
 
     private void showPictureDialog(){
@@ -183,14 +195,26 @@ public class CadastreEmailActivity extends AppCompatActivity {
     }
 
     public void onClick_Continue (View view){
-        UserBeanOLD userBeanOLD = new UserBeanOLD();
-        userBeanOLD.setPersonName(name.getText().toString());
-        userBeanOLD.setPersonEmail(email.getText().toString());
-        userBeanOLD.setPersonId(password.getText().toString());
-
-//        userBeanOLD.setPersonPhoto(uri);
-
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        User user = new User();
+        user.setEmail(email.getText().toString());
+        user.setPassword(password.getText().toString());
+        user.setUsername(name.getText().toString());
+        new UserService().insertUser(user, new Callback() {
+            @Override
+            public void onSuccess(JSONArray result) {
+                try {
+                    UserSimpleDTO loggedUser =
+                            new Conversor().toUserSimpleDTO(result.getJSONObject(0));
+                    prefs.putLong("userId", loggedUser.getId());
+                    prefs.putString("username", loggedUser.getUsername());
+                    prefs.putString("userEmail", loggedUser.getEmail());
+                    prefs.putLong("permissionId", loggedUser.getPermission().getId());
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
     }
 }

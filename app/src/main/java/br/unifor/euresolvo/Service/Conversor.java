@@ -27,7 +27,7 @@ public class Conversor {
                 JSONObject u = array.getJSONObject(i);
                 users.add(toUserSimpleDTO(u));
             } catch (JSONException e) {
-                return null;
+                e.printStackTrace();
             }
         }
         return users;
@@ -41,7 +41,7 @@ public class Conversor {
             dto.setEmail(object.getString("email"));
             dto.setPermission(toPermission(object.getJSONObject("permission")));
         } catch (JSONException e) {
-            return null;
+            e.printStackTrace();
         }
         return dto;
     }
@@ -51,7 +51,7 @@ public class Conversor {
         try {
             p.setId(object.getLong("id"));
         } catch (JSONException e) {
-            return null;
+            e.printStackTrace();
         }
         return p;
     }
@@ -65,19 +65,19 @@ public class Conversor {
             dto.setPermission(toPermission(object.getJSONObject("permission")));
             dto.setPosts(toListOfPostSimpleDTO(object.getJSONArray("posts")));
         } catch (JSONException e) {
-            return null;
+            e.printStackTrace();
         }
         return dto;
     }
 
-    private List<PostSimpleDTO> toListOfPostSimpleDTO(JSONArray array) {
+    public List<PostSimpleDTO> toListOfPostSimpleDTO(JSONArray array) {
         List<PostSimpleDTO> posts = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             try {
                 JSONObject p = array.getJSONObject(i);
                 posts.add(toPostSimpleDTO(p));
             } catch (JSONException e) {
-                return null;
+                e.printStackTrace();
             }
         }
         return posts;
@@ -93,7 +93,7 @@ public class Conversor {
             dto.setTitle(object.getString("title"));
             dto.setVoteCount(object.getInt("voteCount"));
         } catch (JSONException e) {
-            return null;
+            e.printStackTrace();
         }
         return dto;
     }
@@ -110,7 +110,7 @@ public class Conversor {
             dto.setSolutions(toListOfSolutionDTO(object.getJSONArray("solutions")));
             dto.setVoteIds(toSetOfVoteIds(object.getJSONArray("voteIds")));
         } catch (JSONException e) {
-            return null;
+            e.printStackTrace();
         }
         return dto;
     }
@@ -122,7 +122,7 @@ public class Conversor {
                 JSONObject c = array.getJSONObject(i);
                 comments.add(toCommentDTO(c));
             } catch (JSONException e) {
-                return null;
+                e.printStackTrace();
             }
         }
         return comments;
@@ -137,7 +137,7 @@ public class Conversor {
             dto.setDate(object.getString("date"));
             dto.setPostId(object.getLong("postId"));
         } catch (JSONException e) {
-            return null;
+            e.printStackTrace();
         }
         return dto;
     }
@@ -149,7 +149,7 @@ public class Conversor {
                 JSONObject s = array.getJSONObject(i);
                 solutions.add(toSolutionDTO(s));
             } catch (JSONException e) {
-                return null;
+                e.printStackTrace();
             }
         }
         return solutions;
@@ -164,7 +164,7 @@ public class Conversor {
             dto.setDate(object.getString("date"));
             dto.setPostId(object.getLong("postId"));
         } catch (JSONException e) {
-            return null;
+            e.printStackTrace();
         }
         return dto;
     }
@@ -176,7 +176,7 @@ public class Conversor {
                 JSONObject r = array.getJSONObject(i);
                 reports.add(toReportDTO(r));
             } catch (JSONException e) {
-                return null;
+                e.printStackTrace();
             }
         }
         return reports;
@@ -190,7 +190,7 @@ public class Conversor {
             dto.setDescription(object.getString("description"));
             dto.setPost(toPostSimpleDTO(object.getJSONObject("post")));
         } catch (JSONException e) {
-            return null;
+            e.printStackTrace();
         }
         return dto;
     }
@@ -202,7 +202,7 @@ public class Conversor {
                 Long v = array.getLong(i);
                 votes.add(v);
             } catch (JSONException e) {
-                return null;
+                e.printStackTrace();
             }
         }
         return votes;

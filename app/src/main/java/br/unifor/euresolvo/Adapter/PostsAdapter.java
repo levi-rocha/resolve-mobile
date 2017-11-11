@@ -5,9 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import java.util.ArrayList;
 
-import br.unifor.euresolvo.Bean.PostsBean;
+import java.util.List;
+
+import br.unifor.euresolvo.DTO.PostSimpleDTO;
 import br.unifor.euresolvo.R;
 
 /**
@@ -16,12 +17,12 @@ import br.unifor.euresolvo.R;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHolder>{
 
-    ArrayList<PostsBean> posts;
-    public PostsAdapter(ArrayList<PostsBean> postBeen){
-        this.posts = postBeen;
+    //ArrayList<PostsBean> posts;
+    public PostsAdapter(List<PostSimpleDTO> posts){
+        this.posts = posts;
     }
 
-
+    private List<PostSimpleDTO> posts;
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder {
         TextView titleView;

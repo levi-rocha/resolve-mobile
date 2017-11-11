@@ -54,10 +54,12 @@ public class Callback extends JsonHttpResponseHandler {
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         if (errorResponse == null)
             onFailure(null);
-        try {
-            onFailure(errorResponse.getString("message"));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        else {
+            String errors = "";
+            while (errorResponse.keys().hasNext()) {
+                errors += errorResponse.keys().next() + "\n";
+            }
+            onFailure(errors);
         }
     }
 
