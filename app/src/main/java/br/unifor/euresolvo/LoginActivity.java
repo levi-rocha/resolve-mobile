@@ -18,20 +18,18 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
+import java.util.List;
 
 import br.unifor.euresolvo.Bean.UserBeanOLD;
 import br.unifor.euresolvo.DTO.UserSimpleDTO;
 import br.unifor.euresolvo.Dao.UserDao;
-import br.unifor.euresolvo.Models.Permission;
 import br.unifor.euresolvo.Service.Callback;
+import br.unifor.euresolvo.Service.Conversor;
 import br.unifor.euresolvo.Service.UserService;
-
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener{
-
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -52,23 +50,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // Método chamado quando request é sucesso
             @Override
             public void onSuccess(JSONArray result) {
-                try {
-                    // Pegando primeiro objeto retornado
-                    // (verificar o doc da API para saber os atributos)
-                    JSONObject object = result.getJSONObject(0);
-                    // Transformando no DTO adequado
-                    UserSimpleDTO dto = new UserSimpleDTO();
-                    dto.setId(object.getLong("id"));
-                    dto.setUsername(object.getString("username"));
-                    dto.setEmail(object.getString("email"));
-                    JSONObject permissionJSON = object.getJSONObject("permission");
-                    Permission permission = new Permission();
-                    permission.setId(permissionJSON.getLong("id"));
-                    dto.setPermission(permission);
-                    Log.d("exemplo-service", "email do user retornado: " + dto.getEmail());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                List<UserSimpleDTO> users = new Conversor().toListOfUserSimpleDTO(result);
+                Log.d("exemplo-service", "email do primeiro user retornado: " +
+                            users.get(0).getEmail());
             }
             // Método chamado quando request da erro
             @Override

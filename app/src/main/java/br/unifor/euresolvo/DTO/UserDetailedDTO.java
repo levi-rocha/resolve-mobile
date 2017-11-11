@@ -1,7 +1,9 @@
 package br.unifor.euresolvo.DTO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import br.unifor.euresolvo.Models.Permission;
@@ -16,7 +18,7 @@ public class UserDetailedDTO implements Serializable {
 	private String username;
 	private String email;
 	private Permission permission;
-	private Set<PostSimpleDTO> posts;
+	private List<PostSimpleDTO> posts;
 
 	public static UserDetailedDTO fromUser(User user) {
 		UserDetailedDTO dto = new UserDetailedDTO();
@@ -31,7 +33,7 @@ public class UserDetailedDTO implements Serializable {
 				posts.add(pdto);
 			}
 		}
-		dto.setPosts(posts);
+		dto.setPosts(new ArrayList<PostSimpleDTO>(posts));
 		return dto;
 	}
 
@@ -67,11 +69,11 @@ public class UserDetailedDTO implements Serializable {
 		this.permission = permission;
 	}
 
-	public Set<PostSimpleDTO> getPosts() {
+	public List<PostSimpleDTO> getPosts() {
 		return posts;
 	}
 
-	public void setPosts(Set<PostSimpleDTO> posts) {
+	public void setPosts(List<PostSimpleDTO> posts) {
 		this.posts = posts;
 	}
 
