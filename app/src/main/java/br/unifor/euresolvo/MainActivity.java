@@ -1,8 +1,10 @@
 package br.unifor.euresolvo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 
 import br.unifor.euresolvo.Adapter.PostsAdapter;
+import br.unifor.euresolvo.DTO.PostSimpleDTO;
 import br.unifor.euresolvo.Dao.UserDao;
 import br.unifor.euresolvo.Service.Callback;
 import br.unifor.euresolvo.Service.Conversor;
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity
     private static final long SPLASH_TIME_OUT = 1000;
     private RecyclerView rv;
     public ProgressBar progressBar;
+
+    private SharedPreferences.Editor prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity
         });
         */
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -63,21 +70,34 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         carregarFoto();
 
-
         //Montando lista
         rv = (RecyclerView)findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
-        //Chamando o Service para buscar os dados e preencher lista
+        //Chamando o Service para buscar os posts e preencher lista
         new PostService().getPosts(20, 0, new Callback() {
             @Override
             public void onSuccess(JSONArray result) {
-                rv.setAdapter(new PostsAdapter(new Conversor().toListOfPostSimpleDTO(result)));
+                progressBar.setVisibility(View.INVISIBLE);
+                rv.setAdapter(new PostsAdapter(
+                        new Conversor().toListOfPostSimpleDTO(result),
+                        new PostsAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(PostSimpleDTO item) {
+                                Intent intent = new Intent(MainActivity.this, DetailPost.class);
+                                intent.putExtra("postId", item.getId());
+                                startActivity(intent);
+                            }
+                        }));
+            }
+            @Override
+            public void onFailure(String errorResponse) {
+                super.onFailure(errorResponse);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
-
     }
 
     @Override
@@ -114,32 +134,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.nav_my_posts) {
             startActivity(new Intent(getApplicationContext(), MyPosts.class));
         } else if (id == R.id.nav_reposts) {
-            startActivity(new Intent(getApplicationContext(), Reposts.class));
-        /*
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        */
+            startActivity(new Intent(getApplicationContext(), Reports.class));
         } else if (id == R.id.nav_logoff) {
-            Bundle parametros = new Bundle();
-            parametros.putBoolean("logout", true);
-            new UserDao(getApplicationContext()).reset();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.putExtras(parametros);
-            startActivity(intent);
+            prefs.clear();
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
-
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

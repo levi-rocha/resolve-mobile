@@ -11,46 +11,58 @@ import java.util.List;
 import br.unifor.euresolvo.DTO.PostSimpleDTO;
 import br.unifor.euresolvo.R;
 
-/**
- * Created by SamuelSantiago on 14/10/2017.
- */
-
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHolder>{
 
-    //ArrayList<PostsBean> posts;
-    public PostsAdapter(List<PostSimpleDTO> posts){
+    public interface OnItemClickListener {
+        void onItemClick(PostSimpleDTO item);
+    }
+
+    public PostsAdapter(List<PostSimpleDTO> posts, OnItemClickListener listener){
         this.posts = posts;
+        this.listener = listener;
     }
 
     private List<PostSimpleDTO> posts;
+    private final OnItemClickListener listener;
 
-    public static class PostsViewHolder extends RecyclerView.ViewHolder {
+    public class PostsViewHolder extends RecyclerView.ViewHolder {
         TextView titleView;
         TextView contentView;
         TextView authorView;
-
 
         PostsViewHolder(View itemView) {
             super(itemView);
             titleView = (TextView)itemView.findViewById(R.id.post_title);
             contentView = (TextView)itemView.findViewById(R.id.post_content_preview);
             authorView = (TextView)itemView.findViewById(R.id.authorUsername);
+        }
 
+        public void bind(final PostSimpleDTO item, final OnItemClickListener listener) {
+            titleView.setText(item.getTitle());
+            contentView.setText(item.getContentPreview());
+            authorView.setText("- " + item.getAuthorUsername());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(item);
+                }
+            });
         }
     }
 
     @Override
     public PostsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_posts, parent, false);
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_posts, parent, false);
         PostsViewHolder pvh = new PostsViewHolder(v);
         return pvh;
     }
+
     @Override
-    public void onBindViewHolder(PostsViewHolder viewHolder, int i) {
-        viewHolder.titleView.setText(posts.get(i).getTitle());
-        viewHolder.contentView.setText(posts.get(i).getContentPreview());
-        viewHolder.authorView.setText("- " + posts.get(i).getAuthorUsername());
+    public void onBindViewHolder(PostsViewHolder viewHolder, int position) {
+        viewHolder.bind(posts.get(position), listener);
+
     }
+
     @Override
     public int getItemCount() {
         return posts.size();

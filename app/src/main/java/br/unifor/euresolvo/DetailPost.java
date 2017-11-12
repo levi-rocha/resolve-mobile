@@ -2,61 +2,31 @@ package br.unifor.euresolvo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import br.unifor.euresolvo.Adapter.CommentAdapter;
-import br.unifor.euresolvo.Bean.CommentBean;
+import br.unifor.euresolvo.DTO.PostDetailedDTO;
+import br.unifor.euresolvo.Service.Callback;
+import br.unifor.euresolvo.Service.Conversor;
+import br.unifor.euresolvo.Service.PostService;
 
 public class DetailPost extends MainActivity {
 
     TextView txtTitulo;
     TextView txtDescricao;
-
-    ArrayList<CommentBean> commentBeans;
-    private static CommentAdapter commentAdapter;
     RecyclerView mRecyclerView;
-
-    private void setupRecycler() {
-        //Criando lista para teste
-        commentBeans = new ArrayList<>();
-
-        commentBeans.add(new CommentBean(
-                "Comentário Um", "Andrei"));
-        commentBeans.add(new CommentBean(
-                "Comentário Dois", "Bianca"));
-        commentBeans.add(new CommentBean(
-                "Comentário Três", "Maria"));
-
-        // Configurando o gerenciador de layout para ser uma lista.
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
-
-        commentAdapter = new CommentAdapter(commentBeans);
-        mRecyclerView.setAdapter(commentAdapter);
-
-        // Configurando um dividr entre linhas, para uma melhor visualização.
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
-        mRecyclerView.addItemDecoration(itemDecorator);
-
-    }
+    private PostDetailedDTO post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +34,10 @@ public class DetailPost extends MainActivity {
         setContentView(R.layout.activity_detail_post);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mRecyclerView = (RecyclerView) findViewById(R.id.comment_recycler_view_list);
+        setupRecycler();
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +46,7 @@ public class DetailPost extends MainActivity {
                         .setAction("Action", null).show();
             }
         });
+        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -87,15 +61,36 @@ public class DetailPost extends MainActivity {
         txtDescricao = (TextView) findViewById(R.id.txtDescription);
 
         Intent intent = getIntent();
+        Long id = intent.getLongExtra("postId", 0);
+        new PostService().getPostWithId(id, new Callback() {
+            @Override
+            public void onSuccess(JSONArray result) {
+                try {
+                    post = new Conversor().toPostDetailedDTO(result.getJSONObject(0));
+                    txtTitulo.setText(post.getTitle());
+                    txtDescricao.setText(post.getContent());
+                    updateRecycler();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-        String titulo = intent.getStringExtra("titulo");
-        String descricao = intent.getStringExtra("descricao");
+    }
 
-        txtTitulo.setText(titulo);
-        txtDescricao.setText(descricao);
+    private void setupRecycler() {
+        // Configurando o gerenciador de layout para ser uma lista.
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.comment_recycler_view_list);
-        setupRecycler();
+        // Configurando um dividr entre linhas, para uma melhor visualização.
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
+        mRecyclerView.addItemDecoration(itemDecorator);
+    }
+
+    private void updateRecycler() {
+        mRecyclerView.setAdapter(new CommentAdapter(post.getComments()));
     }
 
 }

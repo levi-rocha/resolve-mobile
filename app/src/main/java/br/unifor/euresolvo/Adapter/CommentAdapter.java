@@ -4,19 +4,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import br.unifor.euresolvo.Bean.CommentBean;
+import br.unifor.euresolvo.DTO.CommentDTO;
 import br.unifor.euresolvo.Holder.CommentHolder;
 import br.unifor.euresolvo.R;
 
 public class CommentAdapter  extends RecyclerView.Adapter<CommentHolder>{
 
-    private final List<CommentBean> mComments;
+    private final List<CommentDTO> mComments;
 
-    public CommentAdapter(ArrayList comments) {
+    public CommentAdapter(List<CommentDTO> comments) {
         mComments = comments;
     }
 
@@ -29,10 +28,10 @@ public class CommentAdapter  extends RecyclerView.Adapter<CommentHolder>{
     @Override
     public void onBindViewHolder(CommentHolder holder, int position) {
         holder.txtComentario.setText(String.format(Locale.getDefault(), "%s",
-                mComments.get(position).getComment()
+                mComments.get(position).getContent()
         ));
         holder.txtUsuario.setText(String.format(Locale.getDefault(), "%s",
-                mComments.get(position).getUsuario()
+                mComments.get(position).getAuthorUsername()
         ));
     }
 
@@ -41,11 +40,11 @@ public class CommentAdapter  extends RecyclerView.Adapter<CommentHolder>{
         return mComments != null ? mComments.size() : 0;
     }
 
-    public void updateList(CommentBean comment) {
+    public void updateList(CommentDTO comment) {
         insertItem(comment);
     }
 
-    private void insertItem(CommentBean comment) {
+    private void insertItem(CommentDTO comment) {
         mComments.add(comment);
         notifyItemInserted(getItemCount());
     }
