@@ -47,7 +47,7 @@
                 android:value="br.unifor.euresolvo.MainActivity" />
         </activity>
         <activity
-            android:name=".Reposts"
+            android:name=".Reports"
             android:label="@string/title_activity_reposts"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

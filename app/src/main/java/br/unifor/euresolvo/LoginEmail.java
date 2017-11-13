@@ -1,25 +1,31 @@
 package br.unifor.euresolvo;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import br.unifor.euresolvo.Bean.UserBeanOLD;
-import br.unifor.euresolvo.Bean.UsersBean;
-import br.unifor.euresolvo.Dao.UserDao;
-import br.unifor.euresolvo.Service.API;
-import br.unifor.euresolvo.Service.ServiceLoginPOST;
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import br.unifor.euresolvo.DTO.CredentialsDTO;
+import br.unifor.euresolvo.DTO.UserSimpleDTO;
+import br.unifor.euresolvo.Service.Callback;
+import br.unifor.euresolvo.Service.Conversor;
+import br.unifor.euresolvo.Service.LoginService;
 
 public class LoginEmail extends AppCompatActivity {
 
     private EditText email;
     private EditText pass;
     public ProgressBar progressBar;
+
+    private SharedPreferences.Editor prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,28 +36,39 @@ public class LoginEmail extends AppCompatActivity {
         pass = (EditText) findViewById(R.id.editTextSenhaLogin);
         progressBar = (ProgressBar) findViewById(R.id.progressBarLoginEmail);
         progressBar.setVisibility(View.INVISIBLE);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
     }
 
     public void onClickLogin(View view) {
-        final ServiceLoginPOST serviceLoginPOST = new ServiceLoginPOST(API.loginPOST(), email.getText().toString(), pass.getText().toString());
         progressBar.setVisibility(View.VISIBLE);
-
-        new Handler().postDelayed(new Runnable() {
+        Log.d("login", "email: " + email.getText().toString() + " | pass: " +
+                pass.getText().toString());
+        CredentialsDTO credentials =
+                new CredentialsDTO(email.getText().toString(), pass.getText().toString());
+        new LoginService().login(credentials, new Callback() {
             @Override
-            public void run() {
-                UsersBean usersBean = serviceLoginPOST.getUser();
+            public void onSuccess(JSONArray result) {
                 progressBar.setVisibility(View.INVISIBLE);
-
-                if (usersBean.getEmail() != null) {
-                    UserDao dao = new UserDao(getApplicationContext());
-                    dao.salve(new UserBeanOLD(usersBean.getId(), usersBean.getUsername(), usersBean.getEmail()));
-                    startActivity(new Intent(getApplicationContext(), CadastreActivity.class));
-                }else {
-                    Toast.makeText(getApplicationContext(), "Tente novamente", Toast.LENGTH_LONG).show();
+                try {
+                    UserSimpleDTO loggedUser =
+                            new Conversor().toUserSimpleDTO(result.getJSONObject(0));
+                    prefs.putLong("userId", loggedUser.getId());
+                    prefs.putString("username", loggedUser.getUsername());
+                    prefs.putString("userEmail", loggedUser.getEmail());
+                    prefs.putLong("permissionId", loggedUser.getPermission().getId());
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
-        }, 3000);
-
+            @Override
+            public void onFailure(String errorResponse) {
+                progressBar.setVisibility(View.INVISIBLE);
+                if (errorResponse != null)
+                    Log.d("login", errorResponse);
+            }
+        });
     }
 
     public void onClickGoCadastreEmail(View view){
