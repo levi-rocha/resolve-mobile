@@ -6,14 +6,14 @@
     android:padding="10sp">
 
     <TextView
-        android:id="@+id/txtComentario"
+        android:id="@+id/txtContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Comentário"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/txtUsuario"
+        android:id="@+id/txtAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Usuário"

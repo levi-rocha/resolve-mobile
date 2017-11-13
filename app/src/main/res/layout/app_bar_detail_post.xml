@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.unifor.euresolvo.DetailPost">
+    tools:context="br.unifor.euresolvo.PostDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -34,19 +34,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Título"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:text="Titulo Teste" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
             android:id="@+id/txtDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            tools:text="Esta e uma descricao teste, esta e uma descricao teste, esta e uma descricao teste." />
+            android:text="Content"
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,9 +62,13 @@
             android:layout_marginBottom="8dp"
             android:text="Soluções"
             android:textColor="@color/black"
-            android:textSize="30sp"
             android:textStyle="bold"
             tools:text="Soluções" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/solutionList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/textView6"
@@ -77,7 +76,6 @@
             android:layout_height="wrap_content"
             android:text="Comentários"
             android:textColor="@color/black"
-            android:textSize="30sp"
             android:textStyle="bold"
             tools:text="Comentários" />
 

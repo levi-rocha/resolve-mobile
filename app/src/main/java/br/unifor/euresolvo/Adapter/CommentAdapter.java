@@ -13,10 +13,10 @@ import br.unifor.euresolvo.R;
 
 public class CommentAdapter  extends RecyclerView.Adapter<CommentHolder>{
 
-    private final List<CommentDTO> mComments;
+    private final List<CommentDTO> comments;
 
     public CommentAdapter(List<CommentDTO> comments) {
-        mComments = comments;
+        this.comments = comments;
     }
 
     @Override
@@ -27,25 +27,16 @@ public class CommentAdapter  extends RecyclerView.Adapter<CommentHolder>{
 
     @Override
     public void onBindViewHolder(CommentHolder holder, int position) {
-        holder.txtComentario.setText(String.format(Locale.getDefault(), "%s",
-                mComments.get(position).getContent()
+        holder.txtContent.setText(String.format(Locale.getDefault(), "%s",
+                comments.get(position).getContent()
         ));
-        holder.txtUsuario.setText(String.format(Locale.getDefault(), "%s",
-                mComments.get(position).getAuthorUsername()
+        holder.txtAuthor.setText(String.format(Locale.getDefault(), "%s",
+                comments.get(position).getAuthorUsername()
         ));
     }
 
     @Override
     public int getItemCount() {
-        return mComments != null ? mComments.size() : 0;
-    }
-
-    public void updateList(CommentDTO comment) {
-        insertItem(comment);
-    }
-
-    private void insertItem(CommentDTO comment) {
-        mComments.add(comment);
-        notifyItemInserted(getItemCount());
+        return comments != null ? comments.size() : 0;
     }
 }

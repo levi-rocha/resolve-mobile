@@ -8,12 +8,12 @@ import br.unifor.euresolvo.R;
 
 public class CommentHolder  extends RecyclerView.ViewHolder {
 
-    public TextView txtComentario;
-    public TextView txtUsuario;
+    public TextView txtContent;
+    public TextView txtAuthor;
 
     public CommentHolder(View itemView) {
         super(itemView);
-        txtComentario = (TextView) itemView.findViewById(R.id.txtComentario);
-        txtUsuario = (TextView) itemView.findViewById(R.id.txtUsuario);
+        txtContent = (TextView) itemView.findViewById(R.id.txtContent);
+        txtAuthor = (TextView) itemView.findViewById(R.id.txtAuthor);
     }
 }

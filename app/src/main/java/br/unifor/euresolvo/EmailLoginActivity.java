@@ -3,7 +3,6 @@ package br.unifor.euresolvo;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,13 +18,13 @@ import br.unifor.euresolvo.Service.Callback;
 import br.unifor.euresolvo.Service.Conversor;
 import br.unifor.euresolvo.Service.LoginService;
 
-public class LoginEmail extends AppCompatActivity {
+public class EmailLoginActivity extends AppCompatActivity {
 
     private EditText email;
     private EditText pass;
     public ProgressBar progressBar;
 
-    private SharedPreferences.Editor prefs;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class LoginEmail extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBarLoginEmail);
         progressBar.setVisibility(View.INVISIBLE);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+        prefs = getApplicationContext().getSharedPreferences("loginPref", MODE_PRIVATE);
     }
 
     public void onClickLogin(View view) {
@@ -53,10 +52,11 @@ public class LoginEmail extends AppCompatActivity {
                 try {
                     UserSimpleDTO loggedUser =
                             new Conversor().toUserSimpleDTO(result.getJSONObject(0));
-                    prefs.putLong("userId", loggedUser.getId());
-                    prefs.putString("username", loggedUser.getUsername());
-                    prefs.putString("userEmail", loggedUser.getEmail());
-                    prefs.putLong("permissionId", loggedUser.getPermission().getId());
+                    prefs.edit().putLong("userId", loggedUser.getId()).commit();
+                    prefs.edit().putString("username", loggedUser.getUsername()).commit();
+                    prefs.edit().putString("userEmail", loggedUser.getEmail()).commit();
+                    prefs.edit().putLong("permissionId", loggedUser.getPermission().getId())
+                            .commit();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -72,7 +72,7 @@ public class LoginEmail extends AppCompatActivity {
     }
 
     public void onClickGoCadastreEmail(View view){
-        startActivity(new Intent(getApplicationContext(), CadastreEmailActivity.class));
+        startActivity(new Intent(getApplicationContext(), SignupActivity.class));
     }
 
 

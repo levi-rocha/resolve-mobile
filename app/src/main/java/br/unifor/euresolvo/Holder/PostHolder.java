@@ -6,9 +6,8 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import br.unifor.euresolvo.DetailPost;
+import br.unifor.euresolvo.PostDetailActivity;
 import br.unifor.euresolvo.R;
 
 public class PostHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -31,7 +30,7 @@ public class PostHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(context, DetailPost.class);
+        Intent intent = new Intent(context, PostDetailActivity.class);
         intent.putExtra("titulo", txtTitle.getText());
         intent.putExtra("descricao", txtDescription.getText());
         intent.putExtra("qtd", txtQtd.getText());
