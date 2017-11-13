@@ -53,7 +53,7 @@ public class MyPosts extends MainActivity {
         itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
         mRecyclerView.addItemDecoration(itemDecorator);
 
-        //mRecyclerView.addItemDecoration(
+        //mCommentsRV.addItemDecoration(
           //      new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
     }
 

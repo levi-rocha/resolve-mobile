@@ -40,7 +40,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
         public void bind(final PostSimpleDTO item, final OnItemClickListener listener) {
             titleView.setText(item.getTitle());
             contentView.setText(item.getContentPreview());
-            authorView.setText("- " + item.getAuthorUsername());
+            authorView.setText(item.getAuthorUsername());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(item);

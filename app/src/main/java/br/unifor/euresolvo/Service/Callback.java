@@ -33,7 +33,7 @@ public class Callback extends JsonHttpResponseHandler {
     }
 
     @Override
-    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+    public final void onSuccess(int statusCode, Header[] headers, String responseString) {
         JSONArray timeline = new JSONArray();
         timeline.put(responseString);
         onSuccess(timeline);
@@ -51,20 +51,23 @@ public class Callback extends JsonHttpResponseHandler {
     }
 
     @Override
-    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+    public final void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         if (errorResponse == null)
             onFailure(null);
         else {
             String errors = "";
-            while (errorResponse.keys().hasNext()) {
+            int cap = 20;
+            int control = 0;
+            while (errorResponse.keys().hasNext() && control < cap) {
                 errors += errorResponse.keys().next() + "\n";
+                control++;
             }
             onFailure(errors);
         }
     }
 
     @Override
-    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+    public final void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
         onFailure(responseString);
     }
 }

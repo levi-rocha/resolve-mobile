@@ -38,7 +38,7 @@ public class PostService {
     }
 
     public void insertPost(Post post, Callback callback) {
-        client.post("posts", postCreate(post), callback);
+            client.post("posts", postCreate(post), callback);
     }
 
     public void insertVote(VoteDTO vote, Callback callback) {

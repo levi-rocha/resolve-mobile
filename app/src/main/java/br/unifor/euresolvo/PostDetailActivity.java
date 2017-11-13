@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import br.unifor.euresolvo.Adapter.CommentAdapter;
+import br.unifor.euresolvo.Adapter.SolutionAdapter;
 import br.unifor.euresolvo.DTO.PostDetailedDTO;
 import br.unifor.euresolvo.Service.Callback;
 import br.unifor.euresolvo.Service.Conversor;
@@ -23,30 +24,19 @@ import br.unifor.euresolvo.Service.PostService;
 
 public class PostDetailActivity extends MainActivity {
 
-    TextView txtTitulo;
-    TextView txtDescricao;
-    RecyclerView mRecyclerView;
+    private TextView txtTitulo, txtDescricao;
+    private RecyclerView mCommentsRV, mSolutionsRV;
     private PostDetailedDTO post;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_post);
+        setContentView(R.layout.activity_post_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mRecyclerView = (RecyclerView) findViewById(R.id.comment_recycler_view_list);
-        setupRecycler();
 
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
+        initCommentList();
+        initSolutionList();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -60,6 +50,10 @@ public class PostDetailActivity extends MainActivity {
         txtTitulo = (TextView) findViewById(R.id.txtTitle);
         txtDescricao = (TextView) findViewById(R.id.txtDescription);
 
+        loadPost();
+    }
+
+    private void loadPost() {
         Intent intent = getIntent();
         Long id = intent.getLongExtra("postId", 0);
         new PostService().getPostWithId(id, new Callback() {
@@ -69,28 +63,44 @@ public class PostDetailActivity extends MainActivity {
                     post = new Conversor().toPostDetailedDTO(result.getJSONObject(0));
                     txtTitulo.setText(post.getTitle());
                     txtDescricao.setText(post.getContent());
-                    updateRecycler();
+                    updateCommentList();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
-
     }
 
-    private void setupRecycler() {
+    private void initSolutionList() {
+        mSolutionsRV = (RecyclerView) findViewById(R.id.solutionList);
+        mSolutionsRV.setLayoutManager(new LinearLayoutManager(this));
+        mSolutionsRV.addItemDecoration(postLine());
+    }
+
+    private void initCommentList() {
+        mCommentsRV = (RecyclerView) findViewById(R.id.comment_recycler_view_list);
         // Configurando o gerenciador de layout para ser uma lista.
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
+        mCommentsRV.setLayoutManager(layoutManager);
 
         // Configurando um dividr entre linhas, para uma melhor visualização.
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
-        mRecyclerView.addItemDecoration(itemDecorator);
+        mCommentsRV.addItemDecoration(postLine());
     }
 
-    private void updateRecycler() {
-        mRecyclerView.setAdapter(new CommentAdapter(post.getComments()));
+    private DividerItemDecoration postLine() {
+        DividerItemDecoration itemDecorator =
+                new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(
+                ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
+        return itemDecorator;
+    }
+
+    private void updateSolutionList() {
+        mSolutionsRV.setAdapter(new SolutionAdapter(post.getSolutions()));
+    }
+
+    private void updateCommentList() {
+        mCommentsRV.setAdapter(new CommentAdapter(post.getComments()));
     }
 
 }

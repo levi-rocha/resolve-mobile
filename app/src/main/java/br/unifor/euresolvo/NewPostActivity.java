@@ -3,7 +3,6 @@ package br.unifor.euresolvo;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.json.JSONArray;
+
+import java.util.Map;
 
 import br.unifor.euresolvo.Models.Post;
 import br.unifor.euresolvo.Models.User;
@@ -32,7 +33,7 @@ public class NewPostActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        prefs = getApplicationContext().getSharedPreferences("loginPref", MODE_PRIVATE);
 
         postTitleTxt = (EditText) findViewById(R.id.postTitleTxt);
         postContentTxt = (EditText) findViewById(R.id.postContentTxt);
@@ -50,6 +51,7 @@ public class NewPostActivity extends AppCompatActivity {
         post.setTitle(postTitleTxt.getText().toString());
         post.setContent(postContentTxt.getText().toString());
         User author = new User();
+        final Map<String, ?> all = prefs.getAll();
         author.setId(prefs.getLong("userId", 0));
         post.setAuthor(author);
         showProgressDialog();

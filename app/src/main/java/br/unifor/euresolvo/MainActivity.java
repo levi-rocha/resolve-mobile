@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity
         progressBar.setVisibility(View.VISIBLE);
 
         //Chamando o Service para buscar os posts e preencher lista
+        loadPosts();
+    }
+
+    private void loadPosts() {
         new PostService().getPosts(20, 0, new Callback() {
             @Override
             public void onSuccess(JSONArray result) {
@@ -110,6 +114,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        loadPosts();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadPosts();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -139,7 +155,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_reposts) {
             startActivity(new Intent(getApplicationContext(), Reports.class));
         } else if (id == R.id.nav_logoff) {
-            prefs.clear();
+            //prefs.clear();
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
         }

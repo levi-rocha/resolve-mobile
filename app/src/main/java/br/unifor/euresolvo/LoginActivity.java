@@ -17,15 +17,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import org.json.JSONArray;
-
-import java.util.List;
-
-import br.unifor.euresolvo.DTO.UserSimpleDTO;
-import br.unifor.euresolvo.Service.Callback;
-import br.unifor.euresolvo.Service.Conversor;
-import br.unifor.euresolvo.Service.UserService;
-
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener{
 
@@ -39,26 +30,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ActionBar bar = getSupportActionBar();
-
-        /* ---- EXEMPLO UTILIZAÇÃO DE SERVICE ---- */
-        UserService userService = new UserService();
-        // Pegar primeiros 5 usuários
-        userService.getUsers(5, 0, new Callback() {
-            // Método chamado quando request é sucesso
-            @Override
-            public void onSuccess(JSONArray result) {
-                List<UserSimpleDTO> users = new Conversor().toListOfUserSimpleDTO(result);
-                Log.d("exemplo-service", "email do primeiro user retornado: " +
-                            users.get(0).getEmail());
-            }
-            // Método chamado quando request da erro
-            @Override
-            public void onFailure(String errorResponse) {
-                // Logando o erro
-                Log.d("exemplo-service", "erro retornado: " + errorResponse);
-            }
-        });
-        /* ---- FIM DO EXEMPLO ---- */
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         // Configure sign-in to request the user's ID, email address, and basic profile. ID and
