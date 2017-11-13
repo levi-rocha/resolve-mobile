@@ -21,7 +21,7 @@ import br.unifor.euresolvo.Service.Callback;
 import br.unifor.euresolvo.Service.Conversor;
 import br.unifor.euresolvo.Service.PostService;
 
-public class DetailPost extends MainActivity {
+public class PostDetailActivity extends MainActivity {
 
     TextView txtTitulo;
     TextView txtDescricao;

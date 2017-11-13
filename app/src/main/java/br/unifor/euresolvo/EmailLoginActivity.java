@@ -19,7 +19,7 @@ import br.unifor.euresolvo.Service.Callback;
 import br.unifor.euresolvo.Service.Conversor;
 import br.unifor.euresolvo.Service.LoginService;
 
-public class LoginEmail extends AppCompatActivity {
+public class EmailLoginActivity extends AppCompatActivity {
 
     private EditText email;
     private EditText pass;
@@ -72,7 +72,7 @@ public class LoginEmail extends AppCompatActivity {
     }
 
     public void onClickGoCadastreEmail(View view){
-        startActivity(new Intent(getApplicationContext(), CadastreEmailActivity.class));
+        startActivity(new Intent(getApplicationContext(), SignupActivity.class));
     }
 
 

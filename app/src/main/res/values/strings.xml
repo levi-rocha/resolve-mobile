@@ -91,5 +91,8 @@
 
     <string name="download_success">Download finished</string>
     <string name="download_failure">Download failure</string>
+    <string name="title_activity_new_post">NewPostActivity</string>
+    <string name="postSuccess">Post salvo com sucesso!</string>
+    <string name="postFailure">Não foi possível salvar o seu post...</string>
 
 </resources>

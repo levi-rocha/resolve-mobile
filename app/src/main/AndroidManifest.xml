@@ -38,7 +38,7 @@
                 android:value="br.unifor.euresolvo.MainActivity" />
         </activity>
         <activity
-            android:name=".DetailPost"
+            android:name=".PostDetailActivity"
             android:label="@string/title_activity_detail_post"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -55,8 +55,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.unifor.euresolvo.MainActivity" />
         </activity>
-        <activity android:name=".CadastreEmailActivity" />
-        <activity android:name=".LoginEmail"></activity>
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".EmailLoginActivity" />
+        <activity
+            android:name=".NewPostActivity"
+            android:label="@string/title_activity_new_post"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.unifor.euresolvo.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

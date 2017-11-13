@@ -35,7 +35,7 @@ import br.unifor.euresolvo.Service.Conversor;
 import br.unifor.euresolvo.Service.MyUploadService;
 import br.unifor.euresolvo.Service.UserService;
 
-public class CadastreEmailActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     private EditText name;
     private EditText email;

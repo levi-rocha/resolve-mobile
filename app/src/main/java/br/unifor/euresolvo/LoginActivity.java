@@ -140,7 +140,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             mProgressDialog.setMessage(getString(R.string.loading));
             mProgressDialog.setIndeterminate(true);
         }
-
         mProgressDialog.show();
     }
 
@@ -181,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void OnClickGoEmail(View view){
-        startActivity(new Intent(getApplicationContext(), LoginEmail.class));
+        startActivity(new Intent(getApplicationContext(), EmailLoginActivity.class));
     }
 
 }
