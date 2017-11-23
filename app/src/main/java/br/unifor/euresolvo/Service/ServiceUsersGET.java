@@ -17,10 +17,6 @@ import okhttp3.Response;
 
 import static br.unifor.euresolvo.R.id.textView;
 
-/**
- * Created by SamuelSantiago on 16/10/2017.
- */
-
 public class ServiceUsersGET {
 
     List<UsersBean> usersBeanList;

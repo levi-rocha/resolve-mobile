@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 import br.unifor.euresolvo.Adapter.CommentAdapter;
 import br.unifor.euresolvo.Bean.CommentBean;
+import br.unifor.euresolvo.Service.API;
+import br.unifor.euresolvo.Service.ServiceCommentGET;
 
 public class DetailPost extends MainActivity {
 
@@ -37,13 +39,6 @@ public class DetailPost extends MainActivity {
         //Criando lista para teste
         commentBeans = new ArrayList<>();
 
-        commentBeans.add(new CommentBean(
-                "Comentário Um", "Andrei"));
-        commentBeans.add(new CommentBean(
-                "Comentário Dois", "Bianca"));
-        commentBeans.add(new CommentBean(
-                "Comentário Três", "Maria"));
-
         // Configurando o gerenciador de layout para ser uma lista.
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -55,6 +50,9 @@ public class DetailPost extends MainActivity {
         DividerItemDecoration itemDecorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
         itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
         mRecyclerView.addItemDecoration(itemDecorator);
+
+        ServiceCommentGET serviceCommentGET = new ServiceCommentGET();
+        serviceCommentGET.toRecyclerView(API.commentsGET(), mRecyclerView, progressBar);
 
     }
 
