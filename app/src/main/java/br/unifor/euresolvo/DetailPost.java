@@ -22,9 +22,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import br.unifor.euresolvo.Adapter.CommentAdapter;
+import br.unifor.euresolvo.Adapter.SolutionAdapter;
 import br.unifor.euresolvo.Bean.CommentBean;
+import br.unifor.euresolvo.Bean.SolutionBean;
 import br.unifor.euresolvo.Service.API;
 import br.unifor.euresolvo.Service.ServiceCommentGET;
+import br.unifor.euresolvo.Service.ServiceSolutionsGET;
 
 public class DetailPost extends MainActivity {
 
@@ -35,11 +38,16 @@ public class DetailPost extends MainActivity {
     private static CommentAdapter commentAdapter;
     RecyclerView mRecyclerView;
 
+    ArrayList<SolutionBean> solutionBeans;
+    private static SolutionAdapter solutionAdapter;
+    RecyclerView solutionRecyclerView;
+
     private void setupRecycler() {
         //Criando lista para teste
         commentBeans = new ArrayList<>();
+        solutionBeans = new ArrayList<>();
 
-        // Configurando o gerenciador de layout para ser uma lista.
+        //COMMENTS
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -51,8 +59,23 @@ public class DetailPost extends MainActivity {
         itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
         mRecyclerView.addItemDecoration(itemDecorator);
 
+        //SOLUTIONS
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
+        solutionRecyclerView.setLayoutManager(layoutManager1);
+
+        solutionAdapter = new SolutionAdapter(solutionBeans);
+        solutionRecyclerView.setAdapter(solutionAdapter);
+
+        // Configurando um dividr entre linhas, para uma melhor visualização.
+        DividerItemDecoration solutionItemDecorator = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.post_line));
+        solutionRecyclerView.addItemDecoration(itemDecorator);
+
         ServiceCommentGET serviceCommentGET = new ServiceCommentGET();
         serviceCommentGET.toRecyclerView(API.commentsGET(), mRecyclerView, progressBar);
+
+        ServiceSolutionsGET serviceSolutionGET = new ServiceSolutionsGET();
+        serviceSolutionGET.toRecyclerView(API.solutionsGET(), solutionRecyclerView, progressBar);
 
     }
 
@@ -93,6 +116,7 @@ public class DetailPost extends MainActivity {
         txtDescricao.setText(descricao);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.comment_recycler_view_list);
+        solutionRecyclerView = (RecyclerView) findViewById(R.id.solution_recycler_view_list);
         setupRecycler();
     }
 
