@@ -22,7 +22,7 @@ import br.unifor.euresolvo.Service.Callback;
 import br.unifor.euresolvo.Service.Conversor;
 import br.unifor.euresolvo.Service.PostService;
 
-public class PostDetailActivity extends MainActivity {
+public class PostDetailActivity extends HomeActivity {
 
     private TextView txtTitulo, txtDescricao;
     private RecyclerView mCommentsRV, mSolutionsRV;
