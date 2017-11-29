@@ -59,7 +59,13 @@ public class Callback extends JsonHttpResponseHandler {
             int cap = 20;
             int control = 0;
             while (errorResponse.keys().hasNext() && control < cap) {
-                errors += errorResponse.keys().next() + "\n";
+                String key = errorResponse.keys().next();
+                try {
+                    errors += key + " ---- ";
+                    errors += errorResponse.get(key)  + "\n";
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 control++;
             }
             onFailure(errors);
@@ -68,6 +74,8 @@ public class Callback extends JsonHttpResponseHandler {
 
     @Override
     public final void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+        if (statusCode >= 200 && statusCode < 300)
+            onSuccess(new JSONArray());
         onFailure(responseString);
     }
 }
