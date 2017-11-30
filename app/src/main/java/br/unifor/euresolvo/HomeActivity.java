@@ -1,9 +1,9 @@
 package br.unifor.euresolvo;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 
@@ -31,9 +30,8 @@ public class HomeActivity extends AppCompatActivity
 
     private static final long SPLASH_TIME_OUT = 1000;
     private RecyclerView rv;
-    public ProgressBar progressBar;
-
-    private SharedPreferences.Editor prefs;
+    private ProgressDialog mProgressDialog;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +49,7 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+        prefs = getApplicationContext().getSharedPreferences("loginPref", MODE_PRIVATE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -62,21 +60,18 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //Montando lista
         rv = (RecyclerView)findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
 
-        //Chamando o Service para buscar os posts e preencher lista
         loadPosts();
     }
 
     private void loadPosts() {
+        showProgressDialog();
         new PostService().getPosts(20, 0, new Callback() {
             @Override
             public void onSuccess(JSONArray result) {
-                progressBar.setVisibility(View.INVISIBLE);
+                hideProgressDialog();
                 rv.setAdapter(new PostsAdapter(
                         new Conversor().toListOfPostSimpleDTO(result),
                         new PostsAdapter.OnItemClickListener() {
@@ -90,10 +85,24 @@ public class HomeActivity extends AppCompatActivity
             }
             @Override
             public void onFailure(String errorResponse) {
-                super.onFailure(errorResponse);
-                progressBar.setVisibility(View.INVISIBLE);
+                hideProgressDialog();
             }
         });
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.postsLoading));
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
     }
 
     @Override
@@ -120,19 +129,14 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -144,7 +148,7 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_logoff) {
-            prefs.clear();
+            prefs.edit().clear().commit();
             startActivity(new Intent(getApplicationContext(), SignInActivity.class));
             finish();
         }

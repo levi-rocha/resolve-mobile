@@ -105,5 +105,8 @@
     <string name="loginTitle">Login</string>
     <string name="signupSuccess">Usuário cadastrado com sucesso</string>
     <string name="signupFailure">Não foi possível cadastrar o usuário...</string>
+    <string name="loadingSignup">Cadastrando usuário...</string>
+    <string name="signinLoading">Entrando...</string>
+    <string name="postsLoading">Carregando posts...</string>
 
 </resources>

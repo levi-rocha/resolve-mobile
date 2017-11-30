@@ -3,9 +3,7 @@ package br.unifor.euresolvo;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -55,7 +53,7 @@ public class PostDetailActivity extends HomeActivity {
         setContentView(R.layout.activity_post_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        prefs = getApplicationContext().getSharedPreferences("loginPref", MODE_PRIVATE);
 
         initCommentList();
         initSolutionList();
@@ -83,6 +81,7 @@ public class PostDetailActivity extends HomeActivity {
         txtVotos = (TextView) findViewById(R.id.txtVotos);
         btnVotar = (ImageButton) findViewById(R.id.btnVotar);
         btnVotar.setEnabled(false);
+        btnVotar.setVisibility(View.GONE);
         btnVotar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -97,7 +96,7 @@ public class PostDetailActivity extends HomeActivity {
                             Snackbar.make(view, R.string.voteSuccess,
                                     Snackbar.LENGTH_LONG).show();
                             btnVotar.setEnabled(false);
-                            btnVotar.setColorFilter(Color.RED);
+                            btnVotar.setVisibility(View.GONE);
                             loadPost();
                         }
 
@@ -192,9 +191,10 @@ public class PostDetailActivity extends HomeActivity {
                     txtVotos.setText(post.getVoteIds().size() + " usuários têm este problema");
                     if (!post.getVoteIds().contains(prefs.getLong("userId", 0))) {
                         btnVotar.setEnabled(true);
+                        btnVotar.setVisibility(View.VISIBLE);
                     } else {
                         btnVotar.setEnabled(false);
-                        btnVotar.setColorFilter(Color.RED);
+                        btnVotar.setVisibility(View.GONE);
                     }
                     updateCommentList();
                     updateSolutionList();

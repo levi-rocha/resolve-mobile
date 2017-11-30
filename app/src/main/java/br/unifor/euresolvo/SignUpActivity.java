@@ -4,10 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -38,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.editTextEmail);
         password = (EditText) findViewById(R.id.editTextPass);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+        prefs = getApplicationContext().getSharedPreferences("loginPref", MODE_PRIVATE).edit();
     }
 
     public void onClick_Continue (final View view){
@@ -62,6 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
                     prefs.putString("username", loggedUser.getUsername());
                     prefs.putString("userEmail", loggedUser.getEmail());
                     prefs.putLong("permissionId", loggedUser.getPermission().getId());
+                    prefs.commit();
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -70,7 +69,6 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(String errorResponse) {
                 hideProgressDialog();
-                Log.d("fudeu", errorResponse);
                 Snackbar.make(view, R.string.signupFailure, Snackbar.LENGTH_LONG).show();
             }
         });
@@ -80,7 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setMessage(getString(R.string.loadingSignup));
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();

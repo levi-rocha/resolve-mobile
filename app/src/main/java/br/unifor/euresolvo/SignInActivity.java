@@ -1,5 +1,6 @@
 package br.unifor.euresolvo;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,8 +22,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private EditText email;
     private EditText pass;
-    public ProgressBar progressBar;
-
+    private ProgressDialog mProgressDialog;
     private SharedPreferences prefs;
 
     @Override
@@ -33,30 +32,29 @@ public class SignInActivity extends AppCompatActivity {
 
         email = (EditText) findViewById(R.id.editTextEmailLogin);
         pass = (EditText) findViewById(R.id.editTextSenhaLogin);
-        progressBar = (ProgressBar) findViewById(R.id.progressBarLoginEmail);
-        progressBar.setVisibility(View.INVISIBLE);
 
         prefs = getApplicationContext().getSharedPreferences("loginPref", MODE_PRIVATE);
     }
 
     public void onClickLogin(View view) {
-        progressBar.setVisibility(View.VISIBLE);
         Log.d("login", "email: " + email.getText().toString() + " | pass: " +
                 pass.getText().toString());
         CredentialsDTO credentials =
                 new CredentialsDTO(email.getText().toString(), pass.getText().toString());
+        showProgressDialog();
         new LoginService().login(credentials, new Callback() {
             @Override
             public void onSuccess(JSONArray result) {
-                progressBar.setVisibility(View.INVISIBLE);
+                hideProgressDialog();
                 try {
                     UserSimpleDTO loggedUser =
                             new Conversor().toUserSimpleDTO(result.getJSONObject(0));
-                    prefs.edit().putLong("userId", loggedUser.getId()).commit();
-                    prefs.edit().putString("username", loggedUser.getUsername()).commit();
-                    prefs.edit().putString("userEmail", loggedUser.getEmail()).commit();
-                    prefs.edit().putLong("permissionId", loggedUser.getPermission().getId())
-                            .commit();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putLong("userId", loggedUser.getId());
+                    editor.putString("username", loggedUser.getUsername());
+                    editor.putString("userEmail", loggedUser.getEmail());
+                    editor.putLong("permissionId", loggedUser.getPermission().getId());
+                    editor.commit();
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -64,15 +62,28 @@ public class SignInActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(String errorResponse) {
-                progressBar.setVisibility(View.INVISIBLE);
-                if (errorResponse != null)
-                    Log.d("login", errorResponse);
+                hideProgressDialog();
             }
         });
     }
 
     public void onClickGoCadastreEmail(View view){
         startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.signinLoading));
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
     }
 
 
