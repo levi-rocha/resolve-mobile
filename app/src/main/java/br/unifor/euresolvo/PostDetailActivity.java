@@ -18,8 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -43,7 +43,7 @@ public class PostDetailActivity extends HomeActivity {
     private RecyclerView mCommentsRV, mSolutionsRV;
     private PostDetailedDTO post;
     private ProgressDialog mProgressDialog;
-    private ImageButton btnVotar;
+    private Button btnVotar;
 
     private SharedPreferences prefs;
 
@@ -79,7 +79,7 @@ public class PostDetailActivity extends HomeActivity {
         txtTitulo = (TextView) findViewById(R.id.txtTitle);
         txtDescricao = (TextView) findViewById(R.id.txtDescription);
         txtVotos = (TextView) findViewById(R.id.txtVotos);
-        btnVotar = (ImageButton) findViewById(R.id.btnVotar);
+        btnVotar = (Button) findViewById(R.id.btnVotar);
         btnVotar.setEnabled(false);
         btnVotar.setVisibility(View.GONE);
         btnVotar.setOnClickListener(new View.OnClickListener() {
