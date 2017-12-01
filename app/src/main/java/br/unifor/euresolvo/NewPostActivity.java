@@ -12,8 +12,6 @@ import android.widget.EditText;
 
 import org.json.JSONArray;
 
-import java.util.Map;
-
 import br.unifor.euresolvo.Models.Post;
 import br.unifor.euresolvo.Models.User;
 import br.unifor.euresolvo.Service.Callback;
@@ -51,7 +49,6 @@ public class NewPostActivity extends AppCompatActivity {
         post.setTitle(postTitleTxt.getText().toString());
         post.setContent(postContentTxt.getText().toString());
         User author = new User();
-        final Map<String, ?> all = prefs.getAll();
         author.setId(prefs.getLong("userId", 0));
         post.setAuthor(author);
         showProgressDialog();

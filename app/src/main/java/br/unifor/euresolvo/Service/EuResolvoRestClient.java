@@ -5,8 +5,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
@@ -25,23 +23,15 @@ public class EuResolvoRestClient {
     }
 
     public void post(String url, JSONObject object, AsyncHttpResponseHandler handler) {
-        try {
-            StringEntity entity = new StringEntity(object.toString());
-            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            client.post(null, makeUrl(url), entity, "application/json", handler);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        StringEntity entity = new StringEntity(object.toString(), "UTF-8");
+        entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        client.post(null, makeUrl(url), entity, "application/json", handler);
     }
 
     public void patch(String url, JSONObject object, AsyncHttpResponseHandler handler) {
-        try {
-            StringEntity entity = new StringEntity(object.toString());
-            entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            client.patch(null, makeUrl(url), entity, "application/json", handler);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        StringEntity entity = new StringEntity(object.toString(), "UTF-8");
+        entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        client.patch(null, makeUrl(url), entity, "application/json", handler);
     }
 
     public void delete(String url, AsyncHttpResponseHandler handler) {

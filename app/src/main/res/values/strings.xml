@@ -94,5 +94,19 @@
     <string name="title_activity_new_post">NewPostActivity</string>
     <string name="postSuccess">Post salvo com sucesso!</string>
     <string name="postFailure">Não foi possível salvar o seu post...</string>
+    <string name="savingComment">Salvando seu comentário</string>
+    <string name="commentFailure">Não foi possível enviar seu comentário</string>
+    <string name="commentSuccess">Comentário enviado com sucesso</string>
+    <string name="cancel">Cancelar</string>
+    <string name="novoComentario">Novo comentário</string>
+    <string name="voteSuccess">Voto salvo com sucesso!</string>
+    <string name="voteFailure">Não foi possível salvar seu voto...</string>
+    <string name="signupTitle">Cadastro</string>
+    <string name="loginTitle">Login</string>
+    <string name="signupSuccess">Usuário cadastrado com sucesso</string>
+    <string name="signupFailure">Não foi possível cadastrar o usuário...</string>
+    <string name="loadingSignup">Cadastrando usuário...</string>
+    <string name="signinLoading">Entrando...</string>
+    <string name="postsLoading">Carregando posts...</string>
 
 </resources>

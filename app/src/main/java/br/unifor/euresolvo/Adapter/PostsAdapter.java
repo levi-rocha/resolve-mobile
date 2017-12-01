@@ -29,18 +29,21 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
         TextView titleView;
         TextView contentView;
         TextView authorView;
+        TextView votosView;
 
         PostsViewHolder(View itemView) {
             super(itemView);
             titleView = (TextView)itemView.findViewById(R.id.post_title);
             contentView = (TextView)itemView.findViewById(R.id.post_content_preview);
             authorView = (TextView)itemView.findViewById(R.id.authorUsername);
+            votosView = (TextView)itemView.findViewById(R.id.txtQtdVotos);
         }
 
         public void bind(final PostSimpleDTO item, final OnItemClickListener listener) {
             titleView.setText(item.getTitle());
             contentView.setText(item.getContentPreview());
             authorView.setText(item.getAuthorUsername());
+            votosView.setText(item.getVoteCount() + " usuários têm este problema");
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(item);

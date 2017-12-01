@@ -16,7 +16,7 @@ public class PostService {
 
     public void getPosts(int pageSize, int pageNumber, Callback callback) {
         String request = "posts?page=" + pageNumber + "&size=" + pageSize +
-                "&sort=date";
+                "&sort=date,desc";
         client.get(request, callback);
     }
 
