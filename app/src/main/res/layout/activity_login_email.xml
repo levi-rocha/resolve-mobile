@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context="br.unifor.euresolvo.SignInActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/appBarLayout">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorAccent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <Button
         android:id="@+id/button2"
@@ -77,11 +91,11 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="32dp"
         android:text="Bem vindo!"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_below="@+id/appBarLayout"
+        android:layout_alignEnd="@+id/button2" />
 
     <TextView
         android:id="@+id/textView9"

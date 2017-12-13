@@ -7,14 +7,29 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="br.unifor.euresolvo.SignUpActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/appBarLayout">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorAccent"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Novo Usuário"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:layout_marginTop="41dp"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="34dp"
+        android:layout_below="@+id/appBarLayout"
         android:layout_centerHorizontal="true" />
 
     <EditText
